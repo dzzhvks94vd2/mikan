@@ -2,3 +2,5 @@
 __pycache__/
 .mutmut-cache
 *.egg-info/
+build/
+dist/
