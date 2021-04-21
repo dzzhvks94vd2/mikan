@@ -16,53 +16,62 @@ __all__ = [
 class Counter(Word):
     pass
 
+def _build_h_exceptions(
+    dakuten: str,
+    handakuten: str
+) -> Dict[str, Callable[[str, str], List[str]]]:
+
+    return {
+        'いち': lambda x, y: [x[:-1] + 'っ' + handakuten + y[1:]],
+        'さん': lambda x, y: [x + dakuten + y[1:]],
+        'ろく': lambda x, y: [x[:-1] + 'っ' + handakuten + y[1:]],
+        'はち': lambda x, y: [x[:-1] + 'っ' + handakuten + y[1:], x + y],
+        'じゅう': lambda x, y: [x[:-1] + 'っ' + handakuten + y[1:]],
+    }
+
+def _build_k_exceptions(
+    kana: str,
+) -> Dict[str, Callable[[str, str], List[str]]]:
+
+    return {
+        'いち': lambda x, y: [x[:-1] + 'っ' + kana + y[1:]],
+        'ろく': lambda x, y: [x[:-1] + 'っ' + kana + y[1:]],
+        'はち': lambda x, y: [x[:-1] + 'っ' + kana + y[1:], x + y],
+        'じゅう': lambda x, y: [x[:-1] + 'っ' + kana + y[1:]],
+    }
+
 class CounterCompound(CompoundBase):
 
     __EXCEPTIONS: Dict[str, Dict[str, Callable[[str, str], List[str]]]] = {
-        'いち': {
-            'ふ': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
-            'ひ': lambda x, y: [x[:-1] + 'っぴ' + y[1:]],
-            'ほ': lambda x, y: [x[:-1] + 'っぽ' + y[1:]],
-            'さ': lambda x, y: [x[:-1] + 'っさ' + y[1:]],
-            'こ': lambda x, y: [x[:-1] + 'っこ' + y[1:]],
+        'ふ': {
+            'いち': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
+            'さん': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
+            'ろく': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
+            'はち': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
+            'じゅう': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
         },
-        'さん': {
-            'ふ': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
-            'ひ': lambda x, y: [x + 'び' + y[1:]],
-            'ほ': lambda x, y: [x + 'ぼ' + y[1:]],
+        'ひ': _build_h_exceptions('び', 'ぴ'),
+        'ほ': _build_h_exceptions('ぼ', 'ぽ'),
+        'か': _build_k_exceptions('か'),
+        'こ': _build_k_exceptions('こ'),
+        'さ': {
+            'いち': lambda x, y: [x[:-1] + 'っさ' + y[1:]],
+            'はち': lambda x, y: [x[:-1] + 'っさ' + y[1:], x + y],
+            'じゅう': lambda x, y: [x[:-1] + 'っさ' + y[1:]],
         },
-        'ろく': {
-            'ふ': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
-            'ひ': lambda x, y: [x[:-1] + 'っぴ' + y[1:]],
-            'ほ': lambda x, y: [x[:-1] + 'っぽ' + y[1:]],
-            'こ': lambda x, y: [x[:-1] + 'っこ' + y[1:]],
-        },
-        'はち': {
-            'ふ': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
-            'ひ': lambda x, y: [x[:-1] + 'っぴ' + y[1:], x + y],
-            'ほ': lambda x, y: [x[:-1] + 'っぽ' + y[1:], x + y],
-            'さ': lambda x, y: [x[:-1] + 'っさ' + y[1:], x + y],
-            'こ': lambda x, y: [x[:-1] + 'っこ' + y[1:], x + y],
-        },
-        'じゅう': {
-            'ふ': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
-            'ひ': lambda x, y: [x[:-1] + 'っぴ' + y[1:]],
-            'ほ': lambda x, y: [x[:-1] + 'っぽ' + y[1:]],
-            'さ': lambda x, y: [x[:-1] + 'っさ' + y[1:]],
-            'こ': lambda x, y: [x[:-1] + 'っこ' + y[1:]],
-        }
     }
 
     def _find_func(self, writing1: str, writing2: str) -> Optional[Callable[[str, str], List[str]]]:
-        suffix = None
-        if writing1[-3:] in self.__EXCEPTIONS:
-            suffix = writing1[-3:]
-        elif writing1[-2:] in self.__EXCEPTIONS:
-            suffix = writing1[-2:]
-        if suffix is None:
+        if writing2[0] not in self.__EXCEPTIONS:
             return None
 
-        return self.__EXCEPTIONS[suffix].get(writing2[0])
+        exceptions = self.__EXCEPTIONS[writing2[0]]
+
+        if writing1[-3:] in exceptions:
+            return exceptions[writing1[-3:]]
+        if writing1[-2:] in exceptions:
+            return exceptions[writing1[-2:]]
+        return None
 
     def __init__(self, words: List[Word], writings: Optional[List[Writing]]=None) -> None:
 
