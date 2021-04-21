@@ -159,12 +159,6 @@ _SYMBOLS = [
     ['zu',      'ず',       'ズ'],
 ]
 
-def _long_vowel(symbols: Iterable[List[str]]) -> Iterable[List[str]]:
-    for symbol in symbols:
-        romaji, hiragana, katakana = symbol
-        yield symbol
-        yield [romaji + '-', hiragana + 'ー', katakana + 'ー']
-
 def _tsu(symbols: Iterable[List[str]]) -> Iterable[List[str]]:
     for symbol in symbols:
         romaji, hiragana, katakana = symbol
@@ -188,7 +182,7 @@ class Converter:
 
         self._symbols: Dict[str, List[str]] = {}
 
-        enhancer = _build_enhancer(_long_vowel, _tsu)
+        enhancer = _build_enhancer(_tsu)
 
         for symbol in enhancer(_SYMBOLS):
             romaji, hiragana, katakana = symbol
@@ -207,6 +201,8 @@ class Converter:
 
         self._symbols['/'] = ['/', '・', '・']
         self._symbols['・'] = ['/', '・', '・']
+        self._symbols['-'] = ['-', 'ー', 'ー']
+        self._symbols['ー'] = ['-', 'ー', 'ー']
 
     def next_symbol(self, string: str) -> Tuple[Optional[str], Optional[List[str]]]:
 

@@ -45,6 +45,7 @@ def test_to_hiragana(romaji, expected):
         ("ミャンマー", "myanma-"),
         ("みょうじ", "myouji"),
         ("ミュージック", "myu-jikku"),
+        ("アーー", "a--"),
     ]
 )
 def test_to_romaji(kana, expected):
