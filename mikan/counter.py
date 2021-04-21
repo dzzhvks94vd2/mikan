@@ -23,6 +23,8 @@ class CounterCompound(CompoundBase):
             'ふ': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
             'ひ': lambda x, y: [x[:-1] + 'っぴ' + y[1:]],
             'ほ': lambda x, y: [x[:-1] + 'っぽ' + y[1:]],
+            'さ': lambda x, y: [x[:-1] + 'っさ' + y[1:]],
+            'こ': lambda x, y: [x[:-1] + 'っこ' + y[1:]],
         },
         'さん': {
             'ふ': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
@@ -33,16 +35,21 @@ class CounterCompound(CompoundBase):
             'ふ': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
             'ひ': lambda x, y: [x[:-1] + 'っぴ' + y[1:]],
             'ほ': lambda x, y: [x[:-1] + 'っぽ' + y[1:]],
+            'こ': lambda x, y: [x[:-1] + 'っこ' + y[1:]],
         },
         'はち': {
             'ふ': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
             'ひ': lambda x, y: [x[:-1] + 'っぴ' + y[1:], x + y],
             'ほ': lambda x, y: [x[:-1] + 'っぽ' + y[1:], x + y],
+            'さ': lambda x, y: [x[:-1] + 'っさ' + y[1:], x + y],
+            'こ': lambda x, y: [x[:-1] + 'っこ' + y[1:], x + y],
         },
         'じゅう': {
             'ふ': lambda x, y: [x[:-1] + 'っぷ' + y[1:]],
             'ひ': lambda x, y: [x[:-1] + 'っぴ' + y[1:]],
             'ほ': lambda x, y: [x[:-1] + 'っぽ' + y[1:]],
+            'さ': lambda x, y: [x[:-1] + 'っさ' + y[1:]],
+            'こ': lambda x, y: [x[:-1] + 'っこ' + y[1:]],
         }
     }
 
