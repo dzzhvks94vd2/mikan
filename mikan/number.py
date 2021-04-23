@@ -24,6 +24,13 @@ class Number(Word):
         3: {'kana': 'せん', 'kanji': '千', 'exceptions': {3: 'さんぜん', 8: 'はっせん'}},
     }
 
+    MYRIAD = {
+        1: {'kana': 'まん', 'kanji': '万'},
+        2: {'kana': 'おく', 'kanji': '億'},
+        3: {'kana': 'ちょう', 'kanji': '兆'},
+        4: {'kana': 'けい', 'kanji': '京'},
+    }
+
     def __init__(
         self,
         *args: Union[int, str, Writing, BaseWord]
@@ -47,7 +54,17 @@ class Number(Word):
         super().__init__(*writings)
 
     @staticmethod
-    def _from_digits(num: int, pos: int=0) -> Tuple[str, str]:
+    def _from_digits(num: int, pos: int=0, myriad: int=0) -> Tuple[str, str]:
+
+        if pos == 4:
+            myriad += 1
+            if myriad not in Number.MYRIAD:
+                raise IndexError
+            lkana, lkanji = Number._from_digits(num, 0, myriad)
+            if num % 10000 != 0:
+                lkana += Number.MYRIAD[myriad]['kana']
+                lkanji += Number.MYRIAD[myriad]['kanji']
+            return lkana, lkanji
 
         if pos != 0 and pos not in Number.POS:
             raise IndexError
@@ -71,7 +88,7 @@ class Number(Word):
             rkana = Number.POS[pos]['kana']
             rkanji = Number.POS[pos]['kanji']
         if left > 0:
-            lkana, lkanji = Number._from_digits(left, pos + 1)
+            lkana, lkanji = Number._from_digits(left, pos + 1, myriad)
         return lkana + rkana, lkanji + rkanji
 
     @staticmethod
@@ -82,10 +99,13 @@ class Number(Word):
 
         revdigits = {word['kanji']: digit for digit, word in Number.DIGITS.items()}
         revpos = {word['kanji']: digit for digit, word in Number.POS.items()}
+        revmyriad = {word['kanji']: digit for digit, word in Number.MYRIAD.items()}
 
         number = 0
+        total = 0
         state = 2
         pos = 0
+        myriad = 0
         remaining = kanji
         while remaining:
             remaining, current = remaining[:-1], remaining[-1]
@@ -104,13 +124,20 @@ class Number(Word):
                         number += 10 ** pos
                     pos = revpos[current]
                     state = 2
+                elif current in revmyriad:
+                    total += number * 10000 ** myriad
+                    number = 0
+                    pos = 0
+                    myriad = revmyriad[current]
                 else:
                     raise ValueError('Cannot decode kanji into number')
 
         if state == 2:
             number += 10 ** pos
 
-        return number
+        total += number * 10000 ** myriad
+
+        return total
 
     def __int__(self) -> int:
         return self._digits
