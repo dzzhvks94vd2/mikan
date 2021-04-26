@@ -43,13 +43,13 @@ class CompoundBase:
     def _combine_writings(
         writings1: List[Writing],
         writings2: List[Writing],
-        testfunc: Callable[[Writing], bool]
+        testfunc: Callable[[Writing, Writing], bool]
     ) -> List[Writing]:
 
         writings = []
         for writing1 in writings1:
             for writing2 in writings2:
-                if testfunc(writing1) and testfunc(writing2):
+                if testfunc(writing1, writing2):
                     writings.append(writing1 + writing2)
         return writings
 

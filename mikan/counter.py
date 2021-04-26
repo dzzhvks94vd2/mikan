@@ -134,12 +134,12 @@ class DayHourCounterCompound(CompoundBase):
                 writings.extend(self._combine_writings(
                     number.writings,
                     counter.writings,
-                    lambda x: isinstance(x, Reading)
+                    lambda x, y: isinstance(x, Reading) and isinstance(y, Reading)
                 ))
             writings.extend(self._combine_writings(
                 number.writings,
                 counter.writings,
-                lambda x: not isinstance(x, Reading)
+                lambda x, y: not (isinstance(x, Reading) and isinstance(y, Reading))
             ))
 
         super().__init__(words, writings=writings)
@@ -185,7 +185,7 @@ class MonthDayCounterCompound(CompoundBase):
             writings = self._combine_writings(
                 number.writings,
                 counter.writings,
-                lambda x: not isinstance(x, Reading)
+                lambda x, y: not (isinstance(x, Reading) and isinstance(y, Reading))
             )
             value = int(number)
             if value in self.__EXCEPTIONS:
@@ -194,7 +194,7 @@ class MonthDayCounterCompound(CompoundBase):
                 writings.extend(self._combine_writings(
                     number.writings,
                     counter.writings,
-                    lambda x: isinstance(x, Reading)
+                    lambda x, y: isinstance(x, Reading) and isinstance(y, Reading)
                 ))
 
         super().__init__(words, writings=writings)
@@ -230,7 +230,7 @@ class MonthCounterCompound(CompoundBase):
             writings = self._combine_writings(
                 number.writings,
                 counter.writings,
-                lambda x: not isinstance(x, Reading)
+                lambda x, y: not (isinstance(x, Reading) and isinstance(y, Reading))
             )
             value = int(number)
             if value in self.__EXCEPTIONS:
@@ -239,7 +239,7 @@ class MonthCounterCompound(CompoundBase):
                 writings.extend(self._combine_writings(
                     number.writings,
                     counter.writings,
-                    lambda x: isinstance(x, Reading)
+                    lambda x, y: isinstance(x, Reading) and isinstance(y, Reading)
                 ))
 
         super().__init__(words, writings=writings)
