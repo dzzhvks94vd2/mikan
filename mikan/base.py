@@ -24,3 +24,6 @@ class BaseWord(abc.ABC):
     @abc.abstractmethod
     def __add__(self, other: Union[str, 'BaseWord']) -> 'BaseWord':
         pass
+
+    def __str__(self) -> str:
+        return str(self.writings[0])

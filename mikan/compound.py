@@ -39,9 +39,6 @@ class CompoundBase:
             writings = newwritings
         return writings
 
-    def __str__(self) -> str:
-        return ''.join([str(word) for word in self._words])
-
     @staticmethod
     def _combine_writings(
         writings1: List[Writing],
@@ -81,9 +78,6 @@ class Compound(BaseWord):
     @property
     def writings(self) -> List[Writing]:
         return self._compound.writings
-
-    def __str__(self) -> str:
-        return str(self._compound)
 
     def __add__(self, other: Union[str, BaseWord]) -> BaseWord:
         word = other if isinstance(other, BaseWord) else mikan.word.Word(other)

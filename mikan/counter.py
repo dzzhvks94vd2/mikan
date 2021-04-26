@@ -182,21 +182,20 @@ class MonthDayCounterCompound(CompoundBase):
         number, counter = words
 
         if writings is None:
-            writings = []
+            writings = self._combine_writings(
+                number.writings,
+                counter.writings,
+                lambda x: not isinstance(x, Reading)
+            )
             value = int(number)
             if value in self.__EXCEPTIONS:
-                writings = [Reading(reading) for reading in self.__EXCEPTIONS[value]]
+                writings.extend([Reading(reading) for reading in self.__EXCEPTIONS[value]])
             else:
                 writings.extend(self._combine_writings(
                     number.writings,
                     counter.writings,
                     lambda x: isinstance(x, Reading)
                 ))
-            writings.extend(self._combine_writings(
-                number.writings,
-                counter.writings,
-                lambda x: not isinstance(x, Reading)
-            ))
 
         super().__init__(words, writings=writings)
 
@@ -228,21 +227,20 @@ class MonthCounterCompound(CompoundBase):
         number, counter = words
 
         if writings is None:
-            writings = []
+            writings = self._combine_writings(
+                number.writings,
+                counter.writings,
+                lambda x: not isinstance(x, Reading)
+            )
             value = int(number)
             if value in self.__EXCEPTIONS:
-                writings = [Reading(reading) for reading in self.__EXCEPTIONS[value]]
+                writings.extend([Reading(reading) for reading in self.__EXCEPTIONS[value]])
             else:
                 writings.extend(self._combine_writings(
                     number.writings,
                     counter.writings,
                     lambda x: isinstance(x, Reading)
                 ))
-            writings.extend(self._combine_writings(
-                number.writings,
-                counter.writings,
-                lambda x: not isinstance(x, Reading)
-            ))
 
         super().__init__(words, writings=writings)
 
@@ -281,12 +279,12 @@ class TsuCounterCompound(CompoundBase):
 
         if writings is None:
             writings = []
-            value = int(number)
-            if value in self.__EXCEPTIONS:
-                writings = [Reading(reading) for reading in self.__EXCEPTIONS[value]]
             for wri1 in number.writings:
                 for wri2 in counter.writings:
                     if not isinstance(wri1, Reading):
                         writings.append(wri1 + wri2)
+            value = int(number)
+            if value in self.__EXCEPTIONS:
+                writings.extend([Reading(reading) for reading in self.__EXCEPTIONS[value]])
 
         super().__init__(words, writings=writings)

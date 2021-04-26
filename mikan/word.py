@@ -53,6 +53,3 @@ class Word(BaseWord):
             raise ValueError('Not okurigana')
 
         return Word(*writings), okurigana
-
-    def __str__(self) -> str:
-        return str(self.writings[0])
