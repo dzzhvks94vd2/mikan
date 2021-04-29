@@ -28,7 +28,7 @@ class Word(BaseWord):
 
     def __add__(self, other: Union[str, BaseWord]) -> BaseWord:
         if isinstance(other, BaseWord):
-            return mikan.compound.Compound((self, other))
+            return mikan.compound.Compound.create((self, other))
         writings = [writing + other for writing in self._writings]
         return Word(*writings)
 

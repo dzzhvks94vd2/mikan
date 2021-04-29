@@ -5,12 +5,31 @@ import mikan.word
 
 __all__ = ['Compound']
 
-class CompoundBase:
+class Compound(BaseWord):
 
-    subclasses: List[Type['CompoundBase']] = []
+    subclasses: List[Type['Compound']] = []
 
     def __init_subclass__(cls) -> None:
         cls.subclasses.append(cls)
+
+    @classmethod
+    def create(
+        cls,
+        words: Sequence[BaseWord],
+        writings: Optional[Sequence[Union[str, Writing]]]=None
+    ) -> 'Compound':
+
+        compound = None
+        for sub in cls.subclasses:
+            try:
+                compound = sub(words, writings=writings)
+            except ValueError:
+                pass
+
+        if compound is None:
+            compound = Compound(words, writings=writings)
+
+        return compound
 
     def __init__(
         self,
@@ -24,6 +43,10 @@ class CompoundBase:
         self._writings = None
         if writings is not None:
             self._writings = [Writing.create(writing) for writing in writings]
+
+    def __add__(self, other: Union[str, BaseWord]) -> BaseWord:
+        word = other if isinstance(other, BaseWord) else mikan.word.Word(other)
+        return Compound((self, word))
 
     @property
     def writings(self) -> List[Writing]:
@@ -52,33 +75,3 @@ class CompoundBase:
                 if testfunc(writing1, writing2):
                     writings.append(writing1 + writing2)
         return writings
-
-class Compound(BaseWord):
-
-    def __init__(
-        self,
-        words: Sequence[BaseWord],
-        writings: Optional[Sequence[Union[str, Writing]]]=None
-    ) -> None:
-
-        super().__init__()
-
-        compound = None
-        for cls in CompoundBase.subclasses:
-            try:
-                compound = cls(words, writings=writings)
-            except ValueError:
-                pass
-
-        if compound is None:
-            compound = CompoundBase(words, writings=writings)
-
-        self._compound = compound
-
-    @property
-    def writings(self) -> List[Writing]:
-        return self._compound.writings
-
-    def __add__(self, other: Union[str, BaseWord]) -> BaseWord:
-        word = other if isinstance(other, BaseWord) else mikan.word.Word(other)
-        return Compound((self, word))

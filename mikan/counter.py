@@ -1,5 +1,5 @@
 from typing import List, Optional, Tuple, Callable, Dict
-from mikan.compound import CompoundBase
+from mikan.compound import Compound
 from mikan.number import Number
 from mikan.word import Word
 from mikan.reading import Reading
@@ -40,7 +40,7 @@ def _build_k_exceptions(
         'じゅう': lambda x, y: [x[:-1] + 'っ' + kana + y[1:]],
     }
 
-class CounterCompound(CompoundBase):
+class CounterCompound(Compound):
 
     __EXCEPTIONS: Dict[str, Dict[str, Callable[[str, str], List[str]]]] = {
         'ふ': {
@@ -104,7 +104,7 @@ class DayHourCounter(Word):
     def __init__(self) -> None:
         super().__init__('時', 'じ')
 
-class DayHourCounterCompound(CompoundBase):
+class DayHourCounterCompound(Compound):
 
     __EXCEPTIONS = {
         4: ['よじ'],
@@ -142,6 +142,8 @@ class DayHourCounterCompound(CompoundBase):
                 lambda x, y: not (isinstance(x, Reading) and isinstance(y, Reading))
             ))
 
+        print('writings', writings)
+
         super().__init__(words, writings=writings)
 
 class MonthDayCounter(Word):
@@ -149,7 +151,7 @@ class MonthDayCounter(Word):
     def __init__(self) -> None:
         super().__init__('日', 'にち')
 
-class MonthDayCounterCompound(CompoundBase):
+class MonthDayCounterCompound(Compound):
 
     __EXCEPTIONS = {
         1: ['ついたち'],
@@ -204,7 +206,7 @@ class MonthCounter(Word):
     def __init__(self) -> None:
         super().__init__('月', 'がつ')
 
-class MonthCounterCompound(CompoundBase):
+class MonthCounterCompound(Compound):
 
     __EXCEPTIONS = {
         4: ['しがつ'],
@@ -249,7 +251,7 @@ class TsuCounter(Word):
     def __init__(self) -> None:
         super().__init__('つ')
 
-class TsuCounterCompound(CompoundBase):
+class TsuCounterCompound(Compound):
 
     __EXCEPTIONS = {
         1: ['ひとつ'],

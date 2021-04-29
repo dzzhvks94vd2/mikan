@@ -313,7 +313,7 @@ class SuruVerb(Verb, Word):
 
         if len(args) > 0:
             self._base: Optional[BaseWord] = Word(*args)
-            word: BaseWord = Compound((self._base, Word('する')))
+            word: BaseWord = Compound.create((self._base, Word('する')))
         else:
             self._base = None
             word = Word('する')
