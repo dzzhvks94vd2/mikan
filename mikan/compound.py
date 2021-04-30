@@ -1,4 +1,4 @@
-from typing import List, Type, Union, Callable, Sequence, Optional
+from typing import Iterable, List, Type, Union, Callable, Sequence, Optional
 from mikan.base import BaseWord
 from mikan.writing import Writing
 import mikan.word
@@ -33,7 +33,7 @@ class Compound(BaseWord):
 
     def __init__(
         self,
-        words: Sequence[BaseWord],
+        words: Iterable[BaseWord],
         writings: Optional[Sequence[Union[str, Writing]]]=None
     ) -> None:
 
