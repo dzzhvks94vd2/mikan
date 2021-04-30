@@ -142,8 +142,6 @@ class DayHourCounterCompound(Compound):
                 lambda x, y: not (isinstance(x, Reading) and isinstance(y, Reading))
             ))
 
-        print('writings', writings)
-
         super().__init__(words, writings=writings)
 
 class MonthDayCounter(Word):
