@@ -1,8 +1,8 @@
 from typing import Dict, Iterator, List, Optional, Sequence, Tuple, Union
 from mikan.base import BaseWord
+from mikan.combine import NumberCombine
 from mikan.word import Word
 from mikan.writing import Writing
-from mikan.reading import Reading
 from mikan.compound import Compound
 
 __all__ = ['Number']
@@ -45,18 +45,7 @@ class JuuCompound(Compound):
         ):
             raise ValueError
 
-        digit, juu = words
-
-        if int(digit) == 1:
-            writings = juu.writings
-        else:
-            writings = self._combine_writings(
-                digit.writings,
-                juu.writings,
-                lambda x, y: isinstance(x, Reading) == isinstance(y, Reading)
-            )
-
-        super().__init__(words, writings)
+        super().__init__(words, combine=NumberCombine(hide_one=True))
 
 class Hyaku(Word):
     def __init__(self) -> None:
@@ -70,24 +59,13 @@ class HyakuCompound(Compound):
         ):
             raise ValueError
 
-        digit, hyaku = words
+        exceptions = {
+            3: ['さんびゃく'],
+            6: ['ろっぴゃく'],
+            8: ['はっぴゃく'],
+        }
 
-        if int(digit) == 1:
-            writings = hyaku.writings
-        elif int(digit) == 3:
-            writings = [Writing('三百'), Reading('さんびゃく')]
-        elif int(digit) == 6:
-            writings = [Writing('六百'), Reading('ろっぴゃく')]
-        elif int(digit) == 8:
-            writings = [Writing('八百'), Reading('はっぴゃく')]
-        else:
-            writings = self._combine_writings(
-                digit.writings,
-                hyaku.writings,
-                lambda x, y: isinstance(x, Reading) == isinstance(y, Reading)
-            )
-
-        super().__init__(words, writings)
+        super().__init__(words, combine=NumberCombine(exceptions, hide_one=True))
 
 class Sen(Word):
     def __init__(self) -> None:
@@ -101,22 +79,12 @@ class SenCompound(Compound):
         ):
             raise ValueError
 
-        digit, sen = words
+        exceptions = {
+            3: ['さんぜん'],
+            8: ['はっせん'],
+        }
 
-        if int(digit) == 1:
-            writings = sen.writings
-        elif int(digit) == 3:
-            writings = [Writing('三千'), Reading('さんぜん')]
-        elif int(digit) == 8:
-            writings = [Writing('八千'), Reading('はっせん')]
-        else:
-            writings = self._combine_writings(
-                digit.writings,
-                sen.writings,
-                lambda x, y: isinstance(x, Reading) == isinstance(y, Reading)
-            )
-
-        super().__init__(words, writings)
+        super().__init__(words, combine=NumberCombine(exceptions, hide_one=True))
 
 class MyriadCompound(Compound):
     def __init__(self, words: Sequence[BaseWord], writings: Optional[List[Writing]]=None) -> None:
@@ -162,15 +130,7 @@ class ManCompound(Compound):
         ):
             raise ValueError
 
-        myriad, man = words
-
-        writings = self._combine_writings(
-            myriad.writings,
-            man.writings,
-            lambda x, y: isinstance(x, Reading) == isinstance(y, Reading)
-        )
-
-        super().__init__(words, writings)
+        super().__init__(words)
 
 class Oku(Word):
     def __init__(self) -> None:
@@ -184,15 +144,7 @@ class OkuCompound(Compound):
         ):
             raise ValueError
 
-        myriad, oku = words
-
-        writings = self._combine_writings(
-            myriad.writings,
-            oku.writings,
-            lambda x, y: isinstance(x, Reading) == isinstance(y, Reading)
-        )
-
-        super().__init__(words, writings)
+        super().__init__(words)
 
 class Chou(Word):
     def __init__(self) -> None:
@@ -206,15 +158,7 @@ class ChouCompound(Compound):
         ):
             raise ValueError
 
-        myriad, chou = words
-
-        writings = self._combine_writings(
-            myriad.writings,
-            chou.writings,
-            lambda x, y: isinstance(x, Reading) == isinstance(y, Reading)
-        )
-
-        super().__init__(words, writings)
+        super().__init__(words)
 
 class Kei(Word):
     def __init__(self) -> None:
@@ -228,15 +172,7 @@ class KeiCompound(Compound):
         ):
             raise ValueError
 
-        myriad, kei = words
-
-        writings = self._combine_writings(
-            myriad.writings,
-            kei.writings,
-            lambda x, y: isinstance(x, Reading) == isinstance(y, Reading)
-        )
-
-        super().__init__(words, writings)
+        super().__init__(words)
 
 class Number(Word):
     DIGITS = [Juu(), Hyaku(), Sen()]
@@ -268,16 +204,16 @@ class Number(Word):
 
     @staticmethod
     def _from_digits(num: int) -> Compound:
-        myriad_digits = []
-        for myriad_index, myriad in enumerate(Number._myriad_generator(num)):
+        mdigits = []
+        for index, myriad in enumerate(Number._myriad_generator(num)):
             digits = Number._from_myriad(myriad)
             if len(digits) == 0:
                 continue
-            myriad_digit = MyriadCompound(digits)
-            myriad_digits.append(
-                myriad_digit if myriad_index == 0 else myriad_digit + Number.MYRIADS[myriad_index - 1]
+            mdigit = MyriadCompound(digits)
+            mdigits.append(
+                mdigit if index == 0 else mdigit + Number.MYRIADS[index - 1]
             )
-        return Compound(reversed(myriad_digits))
+        return Compound(reversed(mdigits))
 
     @staticmethod
     def _from_kanji(kanji: str) -> int:

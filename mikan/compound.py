@@ -1,5 +1,6 @@
-from typing import Iterable, List, Type, Union, Callable, Sequence, Optional
+from typing import Iterable, List, Type, Union, Sequence, Optional
 from mikan.base import BaseWord
+from mikan.combine import BaseCombine, DefaultCombine
 from mikan.writing import Writing
 import mikan.word
 
@@ -34,7 +35,8 @@ class Compound(BaseWord):
     def __init__(
         self,
         words: Iterable[BaseWord],
-        writings: Optional[Sequence[Union[str, Writing]]]=None
+        writings: Optional[Sequence[Union[str, Writing]]]=None,
+        combine: Optional[BaseCombine]=None
     ) -> None:
 
         super().__init__()
@@ -43,6 +45,7 @@ class Compound(BaseWord):
         self._writings = None
         if writings is not None:
             self._writings = [Writing.create(writing) for writing in writings]
+        self._combine = combine or DefaultCombine()
 
     def __add__(self, other: Union[str, BaseWord]) -> BaseWord:
         word = other if isinstance(other, BaseWord) else mikan.word.Word(other)
@@ -53,25 +56,4 @@ class Compound(BaseWord):
         if self._writings is not None:
             return self._writings
 
-        writings = [Writing.create('')]
-        for word in self._words:
-            newwritings = []
-            for wwriting in word.writings:
-                for writing in writings:
-                    newwritings.append(writing + wwriting)
-            writings = newwritings
-        return writings
-
-    @staticmethod
-    def _combine_writings(
-        writings1: List[Writing],
-        writings2: List[Writing],
-        testfunc: Callable[[Writing, Writing], bool]
-    ) -> List[Writing]:
-
-        writings = []
-        for writing1 in writings1:
-            for writing2 in writings2:
-                if testfunc(writing1, writing2):
-                    writings.append(writing1 + writing2)
-        return writings
+        return self._combine(self._words)
