@@ -129,6 +129,7 @@ class StandardCombine(BaseCombine):
         'ひ': _build_h_exceptions('び', 'ぴ'),
         'ほ': _build_h_exceptions('ぼ', 'ぽ'),
         'か': _build_k_exceptions('か'),
+        'け': _build_k_exceptions('け'),
         'こ': _build_k_exceptions('こ'),
         'さ': {
             'いち': lambda x, y: [x[:-1] + 'っさ' + y[1:]],

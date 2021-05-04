@@ -1,6 +1,6 @@
 from typing import Dict, Iterator, List, Optional, Sequence, Tuple, Union
 from mikan.base import BaseWord
-from mikan.combine import NumberCombine
+from mikan.combine import NumberCombine, StandardCombine
 from mikan.word import Word
 from mikan.writing import Writing
 from mikan.compound import Compound
@@ -172,7 +172,7 @@ class KeiCompound(Compound):
         ):
             raise ValueError
 
-        super().__init__(words)
+        super().__init__(words, combine=StandardCombine())
 
 class Number(Word):
     DIGITS = [Juu(), Hyaku(), Sen()]

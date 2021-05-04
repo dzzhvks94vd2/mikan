@@ -49,7 +49,7 @@ class Compound(BaseWord):
 
     def __add__(self, other: Union[str, BaseWord]) -> BaseWord:
         word = other if isinstance(other, BaseWord) else mikan.word.Word(other)
-        return Compound((self, word))
+        return Compound.create((self, word))
 
     @property
     def writings(self) -> List[Writing]:
