@@ -14,27 +14,47 @@ class BaseCombine(abc.ABC):
 def _combine_writings(
     writings1: List[Writing],
     writings2: List[Writing],
-    testfunc: Callable[[Writing, Writing], bool]
+    testfunc: Optional[Callable[[Writing, Writing], bool]]=None
 ) -> List[Writing]:
 
     writings = []
     for writing1 in writings1:
         for writing2 in writings2:
-            if testfunc(writing1, writing2):
+            if testfunc is None or testfunc(writing1, writing2):
                 writings.append(writing1 + writing2)
     return writings
 
 class DefaultCombine(BaseCombine):
 
     def __call__(self, words: Iterable[BaseWord]) -> List[Writing]:
+        readings = [Writing.create('')]
         writings = [Writing.create('')]
         for word in words:
-            newwritings = []
-            for wwriting in word.writings:
-                for writing in writings:
-                    newwritings.append(writing + wwriting)
-            writings = newwritings
-        return writings
+            wreadings: List[Writing] = []
+            wwritings: List[Writing] = []
+            for wri in word.writings:
+                if isinstance(wri, Reading):
+                    wreadings.append(wri)
+                else:
+                    wwritings.append(wri)
+            if len(readings) > 0 and len(wreadings) > 0:
+                new_readings = _combine_writings(readings, wreadings)
+            else:
+                new_readings = []
+
+            if len(writings) > 0 and len(wwritings) > 0:
+                new_writings = _combine_writings(writings, wwritings)
+            elif len(writings) > 0 and len(wreadings) > 0:
+                new_writings = _combine_writings(writings, wreadings)
+            elif len(readings) > 0 and len(wwritings) > 0:
+                new_writings = _combine_writings(readings, wwritings)
+            else:
+                new_writings = _combine_writings(readings + writings, wreadings + wwritings)
+
+            readings = new_readings
+            writings = new_writings
+
+        return writings + readings
 
 class NumberCombine(BaseCombine):
 
@@ -58,7 +78,7 @@ class NumberCombine(BaseCombine):
         writings = _combine_writings(
             number.writings,
             word.writings,
-            lambda x, y: not (isinstance(x, Reading) and isinstance(y, Reading))
+            lambda x, y: not isinstance(x, Reading) and not isinstance(y, Reading)
         )
         if value in self._exceptions:
             writings.extend([Reading(reading) for reading in self._exceptions[value]])

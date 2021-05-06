@@ -280,8 +280,9 @@ class KuruVerb(Verb, Word):
             ending = writing[-2:]
             if not ending in ('来る', 'くる'):
                 raise ValueError('Not a kuru verb')
-            base_writings.append(writing[:-2])
-        self._base = Word(*base_writings)
+            if writing[:-2]:
+                base_writings.append(writing[:-2])
+        self._base = Word(*base_writings) if len(base_writings) > 0 else None
 
         Verb.__init__(self, ({
             'ta': Word('来', 'き'),
