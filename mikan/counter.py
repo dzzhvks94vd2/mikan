@@ -10,6 +10,7 @@ __all__ = [
     'DayHourCounter',
     'MonthDayCounter',
     'MonthCounter',
+    'PersonCounter',
     'TsuCounter',
 ]
 
@@ -113,6 +114,34 @@ class MonthCounterCompound(Compound):
         if (
             (len(words) != 2) or
             not (isinstance(words[0], Number) and isinstance(words[1], MonthCounter))
+        ):
+            raise ValueError
+
+        super().__init__(words, writings=writings, combine=NumberCombine(self.__EXCEPTIONS))
+
+class PersonCounter(Word):
+
+    def __init__(self) -> None:
+        super().__init__('人', 'にん')
+
+class PersonCounterCompound(Compound):
+
+    __EXCEPTIONS = {
+        1: ['ひとり'],
+        2: ['ふたり'],
+        4: ['よにん'],
+        7: ['ななにん', 'しちにん'],
+    }
+
+    def __init__(
+        self,
+        words: Tuple[Number, Counter],
+        writings: Optional[List[Writing]]=None
+    ) -> None:
+
+        if (
+            (len(words) != 2) or
+            not (isinstance(words[0], Number) and isinstance(words[1], PersonCounter))
         ):
             raise ValueError
 
