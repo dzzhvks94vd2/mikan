@@ -9,4 +9,4 @@ from .verb import *
 from .word import *
 from .writing import *
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
