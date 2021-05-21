@@ -14,6 +14,7 @@ __all__ = [
     'KuruVerb',
     'SuruVerb',
     'IkuVerb',
+    'AruVerb',
 ]
 
 VerbForm = Enum('VerbForm', (
@@ -357,3 +358,18 @@ class IkuVerb(GodanVerb):
         sbase, _ = self.split_okurigana(1)
 
         self._forms[0]['ta'] = sbase + 'っ'
+
+class AruVerb(GodanVerb):
+
+    def __init__(self, *args: Union[str, Writing, BaseWord]) -> None:
+
+        super().__init__(*args)
+
+        for writing in self.writings:
+            ending = writing[-2:]
+            if ending != 'ある':
+                raise ValueError('Not an aru verb')
+
+        sbase, _ = self.split_okurigana(2)
+
+        self._forms[0]['nai'] = sbase
