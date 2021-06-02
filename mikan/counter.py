@@ -164,6 +164,7 @@ class TsuCounterCompound(Compound):
         7: ['ななつ'],
         8: ['やっつ'],
         9: ['ここのつ'],
+        10: ['とお'],
     }
 
     def __init__(
