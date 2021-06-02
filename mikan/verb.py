@@ -315,12 +315,10 @@ class SuruVerb(Verb, Word):
 
         if len(args) > 0:
             self._base: Optional[BaseWord] = Word(*args)
-            word: BaseWord = Compound.create((self._base, Word('する')))
         else:
             self._base = None
-            word = Word('する')
 
-        Word.__init__(self, word)
+        Word.__init__(self, Word('する'))
         Verb.__init__(self, ({
             'ta': Word('し'),
             'pot': Word('でき'),

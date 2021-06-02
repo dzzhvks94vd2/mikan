@@ -80,6 +80,7 @@ def test_suru_3(tense, polite, expected):
 @pytest.mark.parametrize(
     "verb,tense,negative,polite,expected",
     [
+        ('勉強', VerbForm.PRESENT, False, False, '勉強する'),
         ('勉強', VerbForm.PRESENT, False, True, '勉強します'),
     ]
 )
