@@ -2,6 +2,7 @@ from .adjective import *
 from .compound import *
 from .counter import *
 from .date import *
+from .exceptions import *
 from .number import *
 from .reading import *
 from .utils import *

@@ -1,5 +1,5 @@
 import pytest
-from mikan import IAdjective, IchidanVerb, VerbForm
+from mikan import IAdjective, IchidanVerb, VerbForm, InvalidConjugation
 
 def test_not_ichidan():
 
@@ -107,3 +107,10 @@ def test_ichidan_to_string_2():
     v = IchidanVerb('食べる', 'たべる')
     polite = v.conjugate(polite=True)
     assert str(polite) == '食べます'
+
+def test_ichidan_invalid():
+
+    v = IchidanVerb('食べる', 'たべる')
+
+    with pytest.raises(InvalidConjugation):
+        v.conjugate(VerbForm.IMPERATIVE, polite=True)

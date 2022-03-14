@@ -3,7 +3,7 @@ from typing import Dict, Tuple, Callable, Union, List, Optional
 
 from mikan.adjective import IAdjective
 from mikan.base import BaseWord
-from mikan.compound import Compound
+from mikan.exceptions import InvalidConjugation
 from mikan.word import Word
 from mikan.writing import Writing
 
@@ -150,6 +150,12 @@ class Verb:
             return IchidanVerb(self._forms[0]['cau'] + 'せる').conjugate(follow, polite, negative)
         if current == VerbForm.TAI:
             return IAdjective(self._forms[0]['masu'] + 'たい')
+
+        if negative not in self._ENDINGS[current]:
+            raise InvalidConjugation("There's no negative for this form")
+
+        if polite not in self._ENDINGS[current][negative]:
+            raise InvalidConjugation("There's no polite for this form")
 
         return self._ENDINGS[current][negative][polite](self._forms)
 
