@@ -134,6 +134,9 @@ class Verb:
         if current == Form.TAI:
             return IAdjective(self._forms[0]['masu'] + 'たい').conjugate(follow, negative)
 
+        if current not in self._ENDINGS:
+            raise InvalidConjugation("This form is not supported")
+
         if negative not in self._ENDINGS[current]:
             raise InvalidConjugation("There's no negative for this form")
 
