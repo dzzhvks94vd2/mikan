@@ -1,14 +1,12 @@
-from enum import Enum
 from typing import Dict, Tuple, Callable, Union, List, Optional
 
 from mikan.adjective import IAdjective
-from mikan.base import BaseWord
+from mikan.base import BaseWord, Form
 from mikan.exceptions import InvalidConjugation
 from mikan.word import Word
 from mikan.writing import Writing
 
 __all__ = [
-    'VerbForm',
     'GodanVerb',
     'IchidanVerb',
     'KuruVerb',
@@ -17,26 +15,11 @@ __all__ = [
     'AruVerb',
 ]
 
-VerbForm = Enum('VerbForm', (
-    'PRESENT',
-    'PAST',
-    'IMPERATIVE',
-    'TE_FORM',
-    'CONDITIONAL_EBA',
-    'CONDITIONAL_RA',
-    'PRESUMPTIVE',
-    'VOLITIONAL',
-    'POTENTIAL',
-    'PASSIVE',
-    'CAUSATIVE',
-    'TAI',
-))
-
 class Verb:
     """A Verb."""
 
     _ENDINGS: Dict[
-        VerbForm,
+        Form,
         Dict[
             bool,
             Dict[
@@ -48,7 +31,7 @@ class Verb:
             ]
         ]
     ] = {
-        VerbForm.PRESENT: {
+        Form.PRESENT: {
             False: {
                 False: lambda x: x[0]['self'],
                 True: lambda x: x[0]['masu'] + 'ます',
@@ -58,7 +41,7 @@ class Verb:
                 True: lambda x: x[0]['masu'] + 'ません',
             },
         },
-        VerbForm.PAST: {
+        Form.PAST: {
             False: {
                 False: lambda x: x[0]['ta'] + ('だ' if x[1] else 'た'),
                 True: lambda x: x[0]['masu'] + 'ました',
@@ -68,7 +51,7 @@ class Verb:
                 True: lambda x: x[0]['masu'] + 'ませんでした',
             },
         },
-        VerbForm.IMPERATIVE: {
+        Form.IMPERATIVE: {
             False: {
                 False: lambda x: x[0]['imp'],
             },
@@ -76,7 +59,7 @@ class Verb:
                 False: lambda x: x[0]['self'] + 'な',
             },
         },
-        VerbForm.TE_FORM: {
+        Form.TE: {
             False: {
                 False: lambda x: x[0]['ta'] + ('で' if x[1] else 'て'),
             },
@@ -84,7 +67,7 @@ class Verb:
                 False: lambda x: x[0]['nai'] + 'なくて',
             },
         },
-        VerbForm.CONDITIONAL_EBA: {
+        Form.CONDITIONAL_EBA: {
             False: {
                 False: lambda x: x[0]['e'] + 'ば',
             },
@@ -92,7 +75,7 @@ class Verb:
                 False: lambda x: x[0]['nai'] + 'なければ',
             },
         },
-        VerbForm.CONDITIONAL_RA: {
+        Form.CONDITIONAL_RA: {
             False: {
                 False: lambda x: x[0]['ta'] + ('だ' if x[1] else 'た') + 'ら',
                 True: lambda x: x[0]['masu'] + 'ましたら',
@@ -102,7 +85,7 @@ class Verb:
                 True: lambda x: x[0]['masu'] + 'ませんでしたら',
             },
         },
-        VerbForm.PRESUMPTIVE: {
+        Form.PRESUMPTIVE: {
             False: {
                 False: lambda x: x[0]['self'] + 'だろう',
                 True: lambda x: x[0]['self'] + 'でしょう',
@@ -112,7 +95,7 @@ class Verb:
                 True: lambda x: x[0]['nai'] + 'ないでしょう',
             },
         },
-        VerbForm.VOLITIONAL: {
+        Form.VOLITIONAL: {
             False: {
                 False: lambda x: x[0]['vol'] + 'う',
                 True: lambda x: x[0]['masu'] + 'ましょう',
@@ -126,29 +109,29 @@ class Verb:
 
     def conjugate(
         self,
-        forms: Optional[Union[VerbForm, List[VerbForm]]]=None,
+        forms: Optional[Union[Form, List[Form]]]=None,
         polite: bool=False,
         negative: bool=False
     ) -> BaseWord:
         """Conjugate the verb in the given tense."""
 
         if forms is None:
-            forms = VerbForm.PRESENT
+            forms = Form.PRESENT
 
-        if isinstance(forms, VerbForm):
+        if isinstance(forms, Form):
             current = forms
-            follow = [VerbForm.PRESENT]
+            follow = [Form.PRESENT]
         else:
             current = forms[0]
-            follow = forms[1:] if len(forms) > 1 else [VerbForm.PRESENT]
+            follow = forms[1:] if len(forms) > 1 else [Form.PRESENT]
 
-        if current == VerbForm.POTENTIAL:
+        if current == Form.POTENTIAL:
             return IchidanVerb(self._forms[0]['pot'] + 'る').conjugate(follow, polite, negative)
-        if current == VerbForm.PASSIVE:
+        if current == Form.PASSIVE:
             return IchidanVerb(self._forms[0]['pas'] + 'れる').conjugate(follow, polite, negative)
-        if current == VerbForm.CAUSATIVE:
+        if current == Form.CAUSATIVE:
             return IchidanVerb(self._forms[0]['cau'] + 'せる').conjugate(follow, polite, negative)
-        if current == VerbForm.TAI:
+        if current == Form.TAI:
             return IAdjective(self._forms[0]['masu'] + 'たい')
 
         if negative not in self._ENDINGS[current]:
@@ -306,7 +289,7 @@ class KuruVerb(Verb, Word):
 
     def conjugate(
         self,
-        forms: Optional[Union[VerbForm, List[VerbForm]]]=None,
+        forms: Optional[Union[Form, List[Form]]]=None,
         polite: bool=False,
         negative: bool=False
     ) -> BaseWord:
@@ -340,7 +323,7 @@ class SuruVerb(Verb, Word):
 
     def conjugate(
         self,
-        forms: Optional[Union[VerbForm, List[VerbForm]]]=None,
+        forms: Optional[Union[Form, List[Form]]]=None,
         polite: bool=False,
         negative: bool=False
     ) -> BaseWord:

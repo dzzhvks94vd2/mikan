@@ -1,44 +1,44 @@
 import pytest
-from mikan import SuruVerb, VerbForm
+from mikan import SuruVerb, Form
 
 @pytest.mark.parametrize(
     "tense,negative,polite,expected",
     [
-        (VerbForm.PRESENT, False, False, 'する'),
-        (VerbForm.PAST, False, False, 'した'),
-        (VerbForm.PRESUMPTIVE, False, False, 'するだろう'),
-        (VerbForm.CONDITIONAL_RA, False, False, 'したら'),
-        (VerbForm.POTENTIAL, False, False, 'できる'),
-        (VerbForm.PASSIVE, False, False, 'される'),
-        (VerbForm.CAUSATIVE, False, False, 'させる'),
-        ((VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, False, 'させられる'),
+        (Form.PRESENT, False, False, 'する'),
+        (Form.PAST, False, False, 'した'),
+        (Form.PRESUMPTIVE, False, False, 'するだろう'),
+        (Form.CONDITIONAL_RA, False, False, 'したら'),
+        (Form.POTENTIAL, False, False, 'できる'),
+        (Form.PASSIVE, False, False, 'される'),
+        (Form.CAUSATIVE, False, False, 'させる'),
+        ((Form.CAUSATIVE, Form.PASSIVE), False, False, 'させられる'),
 
-        (VerbForm.PRESENT, True, False, 'しない'),
-        (VerbForm.PAST, True, False, 'しなかった'),
-        (VerbForm.PRESUMPTIVE, True, False, 'しないだろう'),
-        (VerbForm.CONDITIONAL_RA, True, False, 'しなかったら'),
-        (VerbForm.POTENTIAL, True, False, 'できない'),
-        (VerbForm.PASSIVE, True, False, 'されない'),
-        (VerbForm.CAUSATIVE, True, False, 'させない'),
-        ((VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, False, 'させられない'),
+        (Form.PRESENT, True, False, 'しない'),
+        (Form.PAST, True, False, 'しなかった'),
+        (Form.PRESUMPTIVE, True, False, 'しないだろう'),
+        (Form.CONDITIONAL_RA, True, False, 'しなかったら'),
+        (Form.POTENTIAL, True, False, 'できない'),
+        (Form.PASSIVE, True, False, 'されない'),
+        (Form.CAUSATIVE, True, False, 'させない'),
+        ((Form.CAUSATIVE, Form.PASSIVE), True, False, 'させられない'),
 
-        (VerbForm.PRESENT, False, True, 'します'),
-        (VerbForm.PAST, False, True, 'しました'),
-        (VerbForm.PRESUMPTIVE, False, True, 'するでしょう'),
-        (VerbForm.CONDITIONAL_RA, False, True, 'しましたら'),
-        (VerbForm.POTENTIAL, False, True, 'できます'),
-        (VerbForm.PASSIVE, False, True, 'されます'),
-        (VerbForm.CAUSATIVE, False, True, 'させます'),
-        ((VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, True, 'させられます'),
+        (Form.PRESENT, False, True, 'します'),
+        (Form.PAST, False, True, 'しました'),
+        (Form.PRESUMPTIVE, False, True, 'するでしょう'),
+        (Form.CONDITIONAL_RA, False, True, 'しましたら'),
+        (Form.POTENTIAL, False, True, 'できます'),
+        (Form.PASSIVE, False, True, 'されます'),
+        (Form.CAUSATIVE, False, True, 'させます'),
+        ((Form.CAUSATIVE, Form.PASSIVE), False, True, 'させられます'),
 
-        (VerbForm.PRESENT, True, True, 'しません'),
-        (VerbForm.PAST, True, True, 'しませんでした'),
-        (VerbForm.PRESUMPTIVE, True, True, 'しないでしょう'),
-        (VerbForm.CONDITIONAL_RA, True, True, 'しませんでしたら'),
-        (VerbForm.POTENTIAL, True, True, 'できません'),
-        (VerbForm.PASSIVE, True, True, 'されません'),
-        (VerbForm.CAUSATIVE, True, True, 'させません'),
-        ((VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, True, 'させられません'),
+        (Form.PRESENT, True, True, 'しません'),
+        (Form.PAST, True, True, 'しませんでした'),
+        (Form.PRESUMPTIVE, True, True, 'しないでしょう'),
+        (Form.CONDITIONAL_RA, True, True, 'しませんでしたら'),
+        (Form.POTENTIAL, True, True, 'できません'),
+        (Form.PASSIVE, True, True, 'されません'),
+        (Form.CAUSATIVE, True, True, 'させません'),
+        ((Form.CAUSATIVE, Form.PASSIVE), True, True, 'させられません'),
     ]
 )
 def test_suru_1(tense, negative, polite, expected):
@@ -50,12 +50,12 @@ def test_suru_1(tense, negative, polite, expected):
 @pytest.mark.parametrize(
     "tense,negative,expected",
     [
-        (VerbForm.IMPERATIVE, False, 'しろ'),
-        (VerbForm.IMPERATIVE, True, 'するな'),
-        (VerbForm.TE_FORM, False, 'して'),
-        (VerbForm.TE_FORM, True, 'しなくて'),
-        (VerbForm.CONDITIONAL_EBA, False, 'すれば'),
-        (VerbForm.CONDITIONAL_EBA, True, 'しなければ'),
+        (Form.IMPERATIVE, False, 'しろ'),
+        (Form.IMPERATIVE, True, 'するな'),
+        (Form.TE, False, 'して'),
+        (Form.TE, True, 'しなくて'),
+        (Form.CONDITIONAL_EBA, False, 'すれば'),
+        (Form.CONDITIONAL_EBA, True, 'しなければ'),
     ]
 )
 def test_suru_2(tense, negative, expected):
@@ -67,8 +67,8 @@ def test_suru_2(tense, negative, expected):
 @pytest.mark.parametrize(
     "tense,polite,expected",
     [
-        (VerbForm.VOLITIONAL, False, 'しよう'),
-        (VerbForm.VOLITIONAL, True, 'しましょう'),
+        (Form.VOLITIONAL, False, 'しよう'),
+        (Form.VOLITIONAL, True, 'しましょう'),
     ]
 )
 def test_suru_3(tense, polite, expected):
@@ -80,8 +80,8 @@ def test_suru_3(tense, polite, expected):
 @pytest.mark.parametrize(
     "verb,tense,negative,polite,expected",
     [
-        ('勉強', VerbForm.PRESENT, False, False, '勉強する'),
-        ('勉強', VerbForm.PRESENT, False, True, '勉強します'),
+        ('勉強', Form.PRESENT, False, False, '勉強する'),
+        ('勉強', Form.PRESENT, False, True, '勉強します'),
     ]
 )
 def test_suru_4(verb, tense, negative, polite, expected):

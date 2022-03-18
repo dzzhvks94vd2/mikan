@@ -1,33 +1,25 @@
-from enum import Enum
 from typing import Dict, Callable, Union, List
-from mikan.base import BaseWord
+from mikan.base import BaseWord, Form
 from mikan.word import Word
 from mikan.writing import Writing
 
-__all__ = ['AdjectiveForm', 'IAdjective', 'YoiAdjective']
-
-AdjectiveForm = Enum('AdjectiveForm', (
-    'PRESENT',
-    'PAST',
-    'TE_FORM',
-    'ADVERB',
-))
+__all__ = ['IAdjective', 'YoiAdjective']
 
 class IAdjective(Word):
 
-    _ENDINGS: Dict[AdjectiveForm, Dict[bool, Callable[[BaseWord], BaseWord]]] = {
-        AdjectiveForm.PRESENT: {
+    _ENDINGS: Dict[Form, Dict[bool, Callable[[BaseWord], BaseWord]]] = {
+        Form.PRESENT: {
             False: lambda x: x + 'い',
             True: lambda x: x + 'くない',
         },
-        AdjectiveForm.PAST: {
+        Form.PAST: {
             False: lambda x: x + 'かった',
             True: lambda x: x + 'くなかった',
         },
-        AdjectiveForm.TE_FORM: {
+        Form.TE: {
             False: lambda x: x + 'くて',
         },
-        AdjectiveForm.ADVERB: {
+        Form.ADVERB: {
             False: lambda x: x + 'く',
         },
     }
@@ -45,11 +37,11 @@ class IAdjective(Word):
 
     def conjugate(
         self,
-        forms: Union[AdjectiveForm, List[AdjectiveForm]],
+        forms: Union[Form, List[Form]],
         negative: bool=False
     ) -> BaseWord:
 
-        if isinstance(forms, AdjectiveForm):
+        if isinstance(forms, Form):
             current = forms
         else:
             current = forms[0]
@@ -71,16 +63,16 @@ class YoiAdjective(IAdjective):
 
     def conjugate(
         self,
-        forms: Union[AdjectiveForm, List[AdjectiveForm]],
+        forms: Union[Form, List[Form]],
         negative: bool=False
     ) -> BaseWord:
 
-        if isinstance(forms, AdjectiveForm):
+        if isinstance(forms, Form):
             current = forms
         else:
             current = forms[0]
 
-        if (current == AdjectiveForm.PRESENT) and not negative:
+        if (current == Form.PRESENT) and not negative:
             return self._ii
 
         return super().conjugate(current, negative)

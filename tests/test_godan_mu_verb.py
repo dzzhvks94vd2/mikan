@@ -1,44 +1,44 @@
 import pytest
-from mikan import GodanVerb, VerbForm
+from mikan import GodanVerb, Form
 
 @pytest.mark.parametrize(
     "verb,tense,negative,polite,expected",
     [
-        ('のむ', VerbForm.PRESENT, False, False, 'のむ'),
-        ('のむ', VerbForm.PAST, False, False, 'のんだ'),
-        ('のむ', VerbForm.PRESUMPTIVE, False, False, 'のむだろう'),
-        ('のむ', VerbForm.CONDITIONAL_RA, False, False, 'のんだら'),
-        ('のむ', VerbForm.POTENTIAL, False, False, 'のめる'),
-        ('のむ', VerbForm.PASSIVE, False, False, 'のまれる'),
-        ('のむ', VerbForm.CAUSATIVE, False, False, 'のませる'),
-        ('のむ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, False, 'のませられる'),
+        ('のむ', Form.PRESENT, False, False, 'のむ'),
+        ('のむ', Form.PAST, False, False, 'のんだ'),
+        ('のむ', Form.PRESUMPTIVE, False, False, 'のむだろう'),
+        ('のむ', Form.CONDITIONAL_RA, False, False, 'のんだら'),
+        ('のむ', Form.POTENTIAL, False, False, 'のめる'),
+        ('のむ', Form.PASSIVE, False, False, 'のまれる'),
+        ('のむ', Form.CAUSATIVE, False, False, 'のませる'),
+        ('のむ', (Form.CAUSATIVE, Form.PASSIVE), False, False, 'のませられる'),
 
-        ('のむ', VerbForm.PRESENT, True, False, 'のまない'),
-        ('のむ', VerbForm.PAST, True, False, 'のまなかった'),
-        ('のむ', VerbForm.PRESUMPTIVE, True, False, 'のまないだろう'),
-        ('のむ', VerbForm.CONDITIONAL_RA, True, False, 'のまなかったら'),
-        ('のむ', VerbForm.POTENTIAL, True, False, 'のめない'),
-        ('のむ', VerbForm.PASSIVE, True, False, 'のまれない'),
-        ('のむ', VerbForm.CAUSATIVE, True, False, 'のませない'),
-        ('のむ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, False, 'のませられない'),
+        ('のむ', Form.PRESENT, True, False, 'のまない'),
+        ('のむ', Form.PAST, True, False, 'のまなかった'),
+        ('のむ', Form.PRESUMPTIVE, True, False, 'のまないだろう'),
+        ('のむ', Form.CONDITIONAL_RA, True, False, 'のまなかったら'),
+        ('のむ', Form.POTENTIAL, True, False, 'のめない'),
+        ('のむ', Form.PASSIVE, True, False, 'のまれない'),
+        ('のむ', Form.CAUSATIVE, True, False, 'のませない'),
+        ('のむ', (Form.CAUSATIVE, Form.PASSIVE), True, False, 'のませられない'),
 
-        ('のむ', VerbForm.PRESENT, False, True, 'のみます'),
-        ('のむ', VerbForm.PAST, False, True, 'のみました'),
-        ('のむ', VerbForm.PRESUMPTIVE, False, True, 'のむでしょう'),
-        ('のむ', VerbForm.CONDITIONAL_RA, False, True, 'のみましたら'),
-        ('のむ', VerbForm.POTENTIAL, False, True, 'のめます'),
-        ('のむ', VerbForm.PASSIVE, False, True, 'のまれます'),
-        ('のむ', VerbForm.CAUSATIVE, False, True, 'のませます'),
-        ('のむ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, True, 'のませられます'),
+        ('のむ', Form.PRESENT, False, True, 'のみます'),
+        ('のむ', Form.PAST, False, True, 'のみました'),
+        ('のむ', Form.PRESUMPTIVE, False, True, 'のむでしょう'),
+        ('のむ', Form.CONDITIONAL_RA, False, True, 'のみましたら'),
+        ('のむ', Form.POTENTIAL, False, True, 'のめます'),
+        ('のむ', Form.PASSIVE, False, True, 'のまれます'),
+        ('のむ', Form.CAUSATIVE, False, True, 'のませます'),
+        ('のむ', (Form.CAUSATIVE, Form.PASSIVE), False, True, 'のませられます'),
 
-        ('のむ', VerbForm.PRESENT, True, True, 'のみません'),
-        ('のむ', VerbForm.PAST, True, True, 'のみませんでした'),
-        ('のむ', VerbForm.PRESUMPTIVE, True, True, 'のまないでしょう'),
-        ('のむ', VerbForm.CONDITIONAL_RA, True, True, 'のみませんでしたら'),
-        ('のむ', VerbForm.POTENTIAL, True, True, 'のめません'),
-        ('のむ', VerbForm.PASSIVE, True, True, 'のまれません'),
-        ('のむ', VerbForm.CAUSATIVE, True, True, 'のませません'),
-        ('のむ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, True, 'のませられません'),
+        ('のむ', Form.PRESENT, True, True, 'のみません'),
+        ('のむ', Form.PAST, True, True, 'のみませんでした'),
+        ('のむ', Form.PRESUMPTIVE, True, True, 'のまないでしょう'),
+        ('のむ', Form.CONDITIONAL_RA, True, True, 'のみませんでしたら'),
+        ('のむ', Form.POTENTIAL, True, True, 'のめません'),
+        ('のむ', Form.PASSIVE, True, True, 'のまれません'),
+        ('のむ', Form.CAUSATIVE, True, True, 'のませません'),
+        ('のむ', (Form.CAUSATIVE, Form.PASSIVE), True, True, 'のませられません'),
     ]
 )
 def test_godan_mu_1(verb, tense, negative, polite, expected):
@@ -50,12 +50,12 @@ def test_godan_mu_1(verb, tense, negative, polite, expected):
 @pytest.mark.parametrize(
     "verb,tense,negative,expected",
     [
-        ('のむ', VerbForm.IMPERATIVE, False, 'のめ'),
-        ('のむ', VerbForm.IMPERATIVE, True, 'のむな'),
-        ('のむ', VerbForm.TE_FORM, False, 'のんで'),
-        ('のむ', VerbForm.TE_FORM, True, 'のまなくて'),
-        ('のむ', VerbForm.CONDITIONAL_EBA, False, 'のめば'),
-        ('のむ', VerbForm.CONDITIONAL_EBA, True, 'のまなければ'),
+        ('のむ', Form.IMPERATIVE, False, 'のめ'),
+        ('のむ', Form.IMPERATIVE, True, 'のむな'),
+        ('のむ', Form.TE, False, 'のんで'),
+        ('のむ', Form.TE, True, 'のまなくて'),
+        ('のむ', Form.CONDITIONAL_EBA, False, 'のめば'),
+        ('のむ', Form.CONDITIONAL_EBA, True, 'のまなければ'),
     ]
 )
 def test_godan_mu_2(verb, tense, negative, expected):
@@ -67,8 +67,8 @@ def test_godan_mu_2(verb, tense, negative, expected):
 @pytest.mark.parametrize(
     "verb,tense,polite,expected",
     [
-        ('のむ', VerbForm.VOLITIONAL, False, 'のもう'),
-        ('のむ', VerbForm.VOLITIONAL, True, 'のみましょう'),
+        ('のむ', Form.VOLITIONAL, False, 'のもう'),
+        ('のむ', Form.VOLITIONAL, True, 'のみましょう'),
     ]
 )
 def test_godan_mu_3(verb, tense, polite, expected):

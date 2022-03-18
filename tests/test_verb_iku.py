@@ -1,13 +1,13 @@
 import pytest
-from mikan import IkuVerb, VerbForm
+from mikan import IkuVerb, Form
 
 @pytest.mark.parametrize(
     "verb,tense,expected",
     [
-        ('いく', VerbForm.TE_FORM, 'いって'),
-        ('いく', VerbForm.PAST, 'いった'),
-        ('もっていく', VerbForm.TE_FORM, 'もっていって'),
-        ('行く', VerbForm.TE_FORM, '行って'),
+        ('いく', Form.TE, 'いって'),
+        ('いく', Form.PAST, 'いった'),
+        ('もっていく', Form.TE, 'もっていって'),
+        ('行く', Form.TE, '行って'),
     ]
 )
 def test_godan_ku_exceptions(verb, tense, expected):

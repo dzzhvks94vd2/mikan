@@ -1,8 +1,25 @@
+from enum import Enum
 import abc
 from typing import List, Union, cast
 
 from mikan.reading import Reading
 from mikan.writing import Writing
+
+Form = Enum('Form', (
+    'PRESENT',
+    'PAST',
+    'IMPERATIVE',
+    'TE',
+    'CONDITIONAL_EBA',
+    'CONDITIONAL_RA',
+    'PRESUMPTIVE',
+    'VOLITIONAL',
+    'POTENTIAL',
+    'PASSIVE',
+    'CAUSATIVE',
+    'TAI',
+    'ADVERB',
+))
 
 class BaseWord(abc.ABC):
 

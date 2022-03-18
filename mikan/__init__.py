@@ -1,4 +1,5 @@
 from .adjective import *
+from .base import Form
 from .compound import *
 from .counter import *
 from .date import *

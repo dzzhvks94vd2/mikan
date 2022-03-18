@@ -1,44 +1,44 @@
 import pytest
-from mikan import GodanVerb, VerbForm
+from mikan import GodanVerb, Form
 
 @pytest.mark.parametrize(
     "verb,tense,negative,polite,expected",
     [
-        ('とぶ', VerbForm.PRESENT, False, False, 'とぶ'),
-        ('とぶ', VerbForm.PAST, False, False, 'とんだ'),
-        ('とぶ', VerbForm.PRESUMPTIVE, False, False, 'とぶだろう'),
-        ('とぶ', VerbForm.CONDITIONAL_RA, False, False, 'とんだら'),
-        ('とぶ', VerbForm.POTENTIAL, False, False, 'とべる'),
-        ('とぶ', VerbForm.PASSIVE, False, False, 'とばれる'),
-        ('とぶ', VerbForm.CAUSATIVE, False, False, 'とばせる'),
-        ('とぶ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, False, 'とばせられる'),
+        ('とぶ', Form.PRESENT, False, False, 'とぶ'),
+        ('とぶ', Form.PAST, False, False, 'とんだ'),
+        ('とぶ', Form.PRESUMPTIVE, False, False, 'とぶだろう'),
+        ('とぶ', Form.CONDITIONAL_RA, False, False, 'とんだら'),
+        ('とぶ', Form.POTENTIAL, False, False, 'とべる'),
+        ('とぶ', Form.PASSIVE, False, False, 'とばれる'),
+        ('とぶ', Form.CAUSATIVE, False, False, 'とばせる'),
+        ('とぶ', (Form.CAUSATIVE, Form.PASSIVE), False, False, 'とばせられる'),
 
-        ('とぶ', VerbForm.PRESENT, True, False, 'とばない'),
-        ('とぶ', VerbForm.PAST, True, False, 'とばなかった'),
-        ('とぶ', VerbForm.PRESUMPTIVE, True, False, 'とばないだろう'),
-        ('とぶ', VerbForm.CONDITIONAL_RA, True, False, 'とばなかったら'),
-        ('とぶ', VerbForm.POTENTIAL, True, False, 'とべない'),
-        ('とぶ', VerbForm.PASSIVE, True, False, 'とばれない'),
-        ('とぶ', VerbForm.CAUSATIVE, True, False, 'とばせない'),
-        ('とぶ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, False, 'とばせられない'),
+        ('とぶ', Form.PRESENT, True, False, 'とばない'),
+        ('とぶ', Form.PAST, True, False, 'とばなかった'),
+        ('とぶ', Form.PRESUMPTIVE, True, False, 'とばないだろう'),
+        ('とぶ', Form.CONDITIONAL_RA, True, False, 'とばなかったら'),
+        ('とぶ', Form.POTENTIAL, True, False, 'とべない'),
+        ('とぶ', Form.PASSIVE, True, False, 'とばれない'),
+        ('とぶ', Form.CAUSATIVE, True, False, 'とばせない'),
+        ('とぶ', (Form.CAUSATIVE, Form.PASSIVE), True, False, 'とばせられない'),
 
-        ('とぶ', VerbForm.PRESENT, False, True, 'とびます'),
-        ('とぶ', VerbForm.PAST, False, True, 'とびました'),
-        ('とぶ', VerbForm.PRESUMPTIVE, False, True, 'とぶでしょう'),
-        ('とぶ', VerbForm.CONDITIONAL_RA, False, True, 'とびましたら'),
-        ('とぶ', VerbForm.POTENTIAL, False, True, 'とべます'),
-        ('とぶ', VerbForm.PASSIVE, False, True, 'とばれます'),
-        ('とぶ', VerbForm.CAUSATIVE, False, True, 'とばせます'),
-        ('とぶ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, True, 'とばせられます'),
+        ('とぶ', Form.PRESENT, False, True, 'とびます'),
+        ('とぶ', Form.PAST, False, True, 'とびました'),
+        ('とぶ', Form.PRESUMPTIVE, False, True, 'とぶでしょう'),
+        ('とぶ', Form.CONDITIONAL_RA, False, True, 'とびましたら'),
+        ('とぶ', Form.POTENTIAL, False, True, 'とべます'),
+        ('とぶ', Form.PASSIVE, False, True, 'とばれます'),
+        ('とぶ', Form.CAUSATIVE, False, True, 'とばせます'),
+        ('とぶ', (Form.CAUSATIVE, Form.PASSIVE), False, True, 'とばせられます'),
 
-        ('とぶ', VerbForm.PRESENT, True, True, 'とびません'),
-        ('とぶ', VerbForm.PAST, True, True, 'とびませんでした'),
-        ('とぶ', VerbForm.PRESUMPTIVE, True, True, 'とばないでしょう'),
-        ('とぶ', VerbForm.CONDITIONAL_RA, True, True, 'とびませんでしたら'),
-        ('とぶ', VerbForm.POTENTIAL, True, True, 'とべません'),
-        ('とぶ', VerbForm.PASSIVE, True, True, 'とばれません'),
-        ('とぶ', VerbForm.CAUSATIVE, True, True, 'とばせません'),
-        ('とぶ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, True, 'とばせられません'),
+        ('とぶ', Form.PRESENT, True, True, 'とびません'),
+        ('とぶ', Form.PAST, True, True, 'とびませんでした'),
+        ('とぶ', Form.PRESUMPTIVE, True, True, 'とばないでしょう'),
+        ('とぶ', Form.CONDITIONAL_RA, True, True, 'とびませんでしたら'),
+        ('とぶ', Form.POTENTIAL, True, True, 'とべません'),
+        ('とぶ', Form.PASSIVE, True, True, 'とばれません'),
+        ('とぶ', Form.CAUSATIVE, True, True, 'とばせません'),
+        ('とぶ', (Form.CAUSATIVE, Form.PASSIVE), True, True, 'とばせられません'),
     ]
 )
 def test_godan_bu_1(verb, tense, negative, polite, expected):
@@ -50,12 +50,12 @@ def test_godan_bu_1(verb, tense, negative, polite, expected):
 @pytest.mark.parametrize(
     "verb,tense,negative,expected",
     [
-        ('とぶ', VerbForm.IMPERATIVE, False, 'とべ'),
-        ('とぶ', VerbForm.IMPERATIVE, True, 'とぶな'),
-        ('とぶ', VerbForm.TE_FORM, False, 'とんで'),
-        ('とぶ', VerbForm.TE_FORM, True, 'とばなくて'),
-        ('とぶ', VerbForm.CONDITIONAL_EBA, False, 'とべば'),
-        ('とぶ', VerbForm.CONDITIONAL_EBA, True, 'とばなければ'),
+        ('とぶ', Form.IMPERATIVE, False, 'とべ'),
+        ('とぶ', Form.IMPERATIVE, True, 'とぶな'),
+        ('とぶ', Form.TE, False, 'とんで'),
+        ('とぶ', Form.TE, True, 'とばなくて'),
+        ('とぶ', Form.CONDITIONAL_EBA, False, 'とべば'),
+        ('とぶ', Form.CONDITIONAL_EBA, True, 'とばなければ'),
     ]
 )
 def test_godan_bu_2(verb, tense, negative, expected):
@@ -67,8 +67,8 @@ def test_godan_bu_2(verb, tense, negative, expected):
 @pytest.mark.parametrize(
     "verb,tense,polite,expected",
     [
-        ('とぶ', VerbForm.VOLITIONAL, False, 'とぼう'),
-        ('とぶ', VerbForm.VOLITIONAL, True, 'とびましょう'),
+        ('とぶ', Form.VOLITIONAL, False, 'とぼう'),
+        ('とぶ', Form.VOLITIONAL, True, 'とびましょう'),
     ]
 )
 def test_godan_bu_3(verb, tense, polite, expected):

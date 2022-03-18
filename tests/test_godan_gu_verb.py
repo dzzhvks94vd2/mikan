@@ -1,44 +1,44 @@
 import pytest
-from mikan import GodanVerb, VerbForm
+from mikan import GodanVerb, Form
 
 @pytest.mark.parametrize(
     "verb,tense,negative,polite,expected",
     [
-        ('およぐ', VerbForm.PRESENT, False, False, 'およぐ'),
-        ('およぐ', VerbForm.PAST, False, False, 'およいだ'),
-        ('およぐ', VerbForm.PRESUMPTIVE, False, False, 'およぐだろう'),
-        ('およぐ', VerbForm.CONDITIONAL_RA, False, False, 'およいだら'),
-        ('およぐ', VerbForm.POTENTIAL, False, False, 'およげる'),
-        ('およぐ', VerbForm.PASSIVE, False, False, 'およがれる'),
-        ('およぐ', VerbForm.CAUSATIVE, False, False, 'およがせる'),
-        ('およぐ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, False, 'およがせられる'),
+        ('およぐ', Form.PRESENT, False, False, 'およぐ'),
+        ('およぐ', Form.PAST, False, False, 'およいだ'),
+        ('およぐ', Form.PRESUMPTIVE, False, False, 'およぐだろう'),
+        ('およぐ', Form.CONDITIONAL_RA, False, False, 'およいだら'),
+        ('およぐ', Form.POTENTIAL, False, False, 'およげる'),
+        ('およぐ', Form.PASSIVE, False, False, 'およがれる'),
+        ('およぐ', Form.CAUSATIVE, False, False, 'およがせる'),
+        ('およぐ', (Form.CAUSATIVE, Form.PASSIVE), False, False, 'およがせられる'),
 
-        ('およぐ', VerbForm.PRESENT, True, False, 'およがない'),
-        ('およぐ', VerbForm.PAST, True, False, 'およがなかった'),
-        ('およぐ', VerbForm.PRESUMPTIVE, True, False, 'およがないだろう'),
-        ('およぐ', VerbForm.CONDITIONAL_RA, True, False, 'およがなかったら'),
-        ('およぐ', VerbForm.POTENTIAL, True, False, 'およげない'),
-        ('およぐ', VerbForm.PASSIVE, True, False, 'およがれない'),
-        ('およぐ', VerbForm.CAUSATIVE, True, False, 'およがせない'),
-        ('およぐ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, False, 'およがせられない'),
+        ('およぐ', Form.PRESENT, True, False, 'およがない'),
+        ('およぐ', Form.PAST, True, False, 'およがなかった'),
+        ('およぐ', Form.PRESUMPTIVE, True, False, 'およがないだろう'),
+        ('およぐ', Form.CONDITIONAL_RA, True, False, 'およがなかったら'),
+        ('およぐ', Form.POTENTIAL, True, False, 'およげない'),
+        ('およぐ', Form.PASSIVE, True, False, 'およがれない'),
+        ('およぐ', Form.CAUSATIVE, True, False, 'およがせない'),
+        ('およぐ', (Form.CAUSATIVE, Form.PASSIVE), True, False, 'およがせられない'),
 
-        ('およぐ', VerbForm.PRESENT, False, True, 'およぎます'),
-        ('およぐ', VerbForm.PAST, False, True, 'およぎました'),
-        ('およぐ', VerbForm.PRESUMPTIVE, False, True, 'およぐでしょう'),
-        ('およぐ', VerbForm.CONDITIONAL_RA, False, True, 'およぎましたら'),
-        ('およぐ', VerbForm.POTENTIAL, False, True, 'およげます'),
-        ('およぐ', VerbForm.PASSIVE, False, True, 'およがれます'),
-        ('およぐ', VerbForm.CAUSATIVE, False, True, 'およがせます'),
-        ('およぐ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, True, 'およがせられます'),
+        ('およぐ', Form.PRESENT, False, True, 'およぎます'),
+        ('およぐ', Form.PAST, False, True, 'およぎました'),
+        ('およぐ', Form.PRESUMPTIVE, False, True, 'およぐでしょう'),
+        ('およぐ', Form.CONDITIONAL_RA, False, True, 'およぎましたら'),
+        ('およぐ', Form.POTENTIAL, False, True, 'およげます'),
+        ('およぐ', Form.PASSIVE, False, True, 'およがれます'),
+        ('およぐ', Form.CAUSATIVE, False, True, 'およがせます'),
+        ('およぐ', (Form.CAUSATIVE, Form.PASSIVE), False, True, 'およがせられます'),
 
-        ('およぐ', VerbForm.PRESENT, True, True, 'およぎません'),
-        ('およぐ', VerbForm.PAST, True, True, 'およぎませんでした'),
-        ('およぐ', VerbForm.PRESUMPTIVE, True, True, 'およがないでしょう'),
-        ('およぐ', VerbForm.CONDITIONAL_RA, True, True, 'およぎませんでしたら'),
-        ('およぐ', VerbForm.POTENTIAL, True, True, 'およげません'),
-        ('およぐ', VerbForm.PASSIVE, True, True, 'およがれません'),
-        ('およぐ', VerbForm.CAUSATIVE, True, True, 'およがせません'),
-        ('およぐ', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, True, 'およがせられません'),
+        ('およぐ', Form.PRESENT, True, True, 'およぎません'),
+        ('およぐ', Form.PAST, True, True, 'およぎませんでした'),
+        ('およぐ', Form.PRESUMPTIVE, True, True, 'およがないでしょう'),
+        ('およぐ', Form.CONDITIONAL_RA, True, True, 'およぎませんでしたら'),
+        ('およぐ', Form.POTENTIAL, True, True, 'およげません'),
+        ('およぐ', Form.PASSIVE, True, True, 'およがれません'),
+        ('およぐ', Form.CAUSATIVE, True, True, 'およがせません'),
+        ('およぐ', (Form.CAUSATIVE, Form.PASSIVE), True, True, 'およがせられません'),
     ]
 )
 def test_godan_gu_1(verb, tense, negative, polite, expected):
@@ -50,12 +50,12 @@ def test_godan_gu_1(verb, tense, negative, polite, expected):
 @pytest.mark.parametrize(
     "verb,tense,negative,expected",
     [
-        ('およぐ', VerbForm.IMPERATIVE, False, 'およげ'),
-        ('およぐ', VerbForm.IMPERATIVE, True, 'およぐな'),
-        ('およぐ', VerbForm.TE_FORM, False, 'およいで'),
-        ('およぐ', VerbForm.TE_FORM, True, 'およがなくて'),
-        ('およぐ', VerbForm.CONDITIONAL_EBA, False, 'およげば'),
-        ('およぐ', VerbForm.CONDITIONAL_EBA, True, 'およがなければ'),
+        ('およぐ', Form.IMPERATIVE, False, 'およげ'),
+        ('およぐ', Form.IMPERATIVE, True, 'およぐな'),
+        ('およぐ', Form.TE, False, 'およいで'),
+        ('およぐ', Form.TE, True, 'およがなくて'),
+        ('およぐ', Form.CONDITIONAL_EBA, False, 'およげば'),
+        ('およぐ', Form.CONDITIONAL_EBA, True, 'およがなければ'),
     ]
 )
 def test_godan_gu_2(verb, tense, negative, expected):
@@ -67,8 +67,8 @@ def test_godan_gu_2(verb, tense, negative, expected):
 @pytest.mark.parametrize(
     "verb,tense,polite,expected",
     [
-        ('およぐ', VerbForm.VOLITIONAL, False, 'およごう'),
-        ('およぐ', VerbForm.VOLITIONAL, True, 'およぎましょう'),
+        ('およぐ', Form.VOLITIONAL, False, 'およごう'),
+        ('およぐ', Form.VOLITIONAL, True, 'およぎましょう'),
     ]
 )
 def test_godan_gu_3(verb, tense, polite, expected):

@@ -1,44 +1,44 @@
 import pytest
-from mikan import GodanVerb, VerbForm
+from mikan import GodanVerb, Form
 
 @pytest.mark.parametrize(
     "verb,tense,negative,polite,expected",
     [
-        ('あう', VerbForm.PRESENT, False, False, 'あう'),
-        ('あう', VerbForm.PAST, False, False, 'あった'),
-        ('あう', VerbForm.PRESUMPTIVE, False, False, 'あうだろう'),
-        ('あう', VerbForm.CONDITIONAL_RA, False, False, 'あったら'),
-        ('あう', VerbForm.POTENTIAL, False, False, 'あえる'),
-        ('あう', VerbForm.PASSIVE, False, False, 'あわれる'),
-        ('あう', VerbForm.CAUSATIVE, False, False, 'あわせる'),
-        ('あう', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, False, 'あわせられる'),
+        ('あう', Form.PRESENT, False, False, 'あう'),
+        ('あう', Form.PAST, False, False, 'あった'),
+        ('あう', Form.PRESUMPTIVE, False, False, 'あうだろう'),
+        ('あう', Form.CONDITIONAL_RA, False, False, 'あったら'),
+        ('あう', Form.POTENTIAL, False, False, 'あえる'),
+        ('あう', Form.PASSIVE, False, False, 'あわれる'),
+        ('あう', Form.CAUSATIVE, False, False, 'あわせる'),
+        ('あう', (Form.CAUSATIVE, Form.PASSIVE), False, False, 'あわせられる'),
 
-        ('あう', VerbForm.PRESENT, True, False, 'あわない'),
-        ('あう', VerbForm.PAST, True, False, 'あわなかった'),
-        ('あう', VerbForm.PRESUMPTIVE, True, False, 'あわないだろう'),
-        ('あう', VerbForm.CONDITIONAL_RA, True, False, 'あわなかったら'),
-        ('あう', VerbForm.POTENTIAL, True, False, 'あえない'),
-        ('あう', VerbForm.PASSIVE, True, False, 'あわれない'),
-        ('あう', VerbForm.CAUSATIVE, True, False, 'あわせない'),
-        ('あう', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, False, 'あわせられない'),
+        ('あう', Form.PRESENT, True, False, 'あわない'),
+        ('あう', Form.PAST, True, False, 'あわなかった'),
+        ('あう', Form.PRESUMPTIVE, True, False, 'あわないだろう'),
+        ('あう', Form.CONDITIONAL_RA, True, False, 'あわなかったら'),
+        ('あう', Form.POTENTIAL, True, False, 'あえない'),
+        ('あう', Form.PASSIVE, True, False, 'あわれない'),
+        ('あう', Form.CAUSATIVE, True, False, 'あわせない'),
+        ('あう', (Form.CAUSATIVE, Form.PASSIVE), True, False, 'あわせられない'),
 
-        ('あう', VerbForm.PRESENT, False, True, 'あいます'),
-        ('あう', VerbForm.PAST, False, True, 'あいました'),
-        ('あう', VerbForm.PRESUMPTIVE, False, True, 'あうでしょう'),
-        ('あう', VerbForm.CONDITIONAL_RA, False, True, 'あいましたら'),
-        ('あう', VerbForm.POTENTIAL, False, True, 'あえます'),
-        ('あう', VerbForm.PASSIVE, False, True, 'あわれます'),
-        ('あう', VerbForm.CAUSATIVE, False, True, 'あわせます'),
-        ('あう', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, True, 'あわせられます'),
+        ('あう', Form.PRESENT, False, True, 'あいます'),
+        ('あう', Form.PAST, False, True, 'あいました'),
+        ('あう', Form.PRESUMPTIVE, False, True, 'あうでしょう'),
+        ('あう', Form.CONDITIONAL_RA, False, True, 'あいましたら'),
+        ('あう', Form.POTENTIAL, False, True, 'あえます'),
+        ('あう', Form.PASSIVE, False, True, 'あわれます'),
+        ('あう', Form.CAUSATIVE, False, True, 'あわせます'),
+        ('あう', (Form.CAUSATIVE, Form.PASSIVE), False, True, 'あわせられます'),
 
-        ('あう', VerbForm.PRESENT, True, True, 'あいません'),
-        ('あう', VerbForm.PAST, True, True, 'あいませんでした'),
-        ('あう', VerbForm.PRESUMPTIVE, True, True, 'あわないでしょう'),
-        ('あう', VerbForm.CONDITIONAL_RA, True, True, 'あいませんでしたら'),
-        ('あう', VerbForm.POTENTIAL, True, True, 'あえません'),
-        ('あう', VerbForm.PASSIVE, True, True, 'あわれません'),
-        ('あう', VerbForm.CAUSATIVE, True, True, 'あわせません'),
-        ('あう', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, True, 'あわせられません'),
+        ('あう', Form.PRESENT, True, True, 'あいません'),
+        ('あう', Form.PAST, True, True, 'あいませんでした'),
+        ('あう', Form.PRESUMPTIVE, True, True, 'あわないでしょう'),
+        ('あう', Form.CONDITIONAL_RA, True, True, 'あいませんでしたら'),
+        ('あう', Form.POTENTIAL, True, True, 'あえません'),
+        ('あう', Form.PASSIVE, True, True, 'あわれません'),
+        ('あう', Form.CAUSATIVE, True, True, 'あわせません'),
+        ('あう', (Form.CAUSATIVE, Form.PASSIVE), True, True, 'あわせられません'),
     ]
 )
 def test_godan_u_1(verb, tense, negative, polite, expected):
@@ -50,12 +50,12 @@ def test_godan_u_1(verb, tense, negative, polite, expected):
 @pytest.mark.parametrize(
     "verb,tense,negative,expected",
     [
-        ('あう', VerbForm.IMPERATIVE, False, 'あえ'),
-        ('あう', VerbForm.IMPERATIVE, True, 'あうな'),
-        ('あう', VerbForm.TE_FORM, False, 'あって'),
-        ('あう', VerbForm.TE_FORM, True, 'あわなくて'),
-        ('あう', VerbForm.CONDITIONAL_EBA, False, 'あえば'),
-        ('あう', VerbForm.CONDITIONAL_EBA, True, 'あわなければ'),
+        ('あう', Form.IMPERATIVE, False, 'あえ'),
+        ('あう', Form.IMPERATIVE, True, 'あうな'),
+        ('あう', Form.TE, False, 'あって'),
+        ('あう', Form.TE, True, 'あわなくて'),
+        ('あう', Form.CONDITIONAL_EBA, False, 'あえば'),
+        ('あう', Form.CONDITIONAL_EBA, True, 'あわなければ'),
     ]
 )
 def test_godan_u_2(verb, tense, negative, expected):
@@ -67,8 +67,8 @@ def test_godan_u_2(verb, tense, negative, expected):
 @pytest.mark.parametrize(
     "verb,tense,polite,expected",
     [
-        ('あう', VerbForm.VOLITIONAL, False, 'あおう'),
-        ('あう', VerbForm.VOLITIONAL, True, 'あいましょう'),
+        ('あう', Form.VOLITIONAL, False, 'あおう'),
+        ('あう', Form.VOLITIONAL, True, 'あいましょう'),
     ]
 )
 def test_godan_u_3(verb, tense, polite, expected):

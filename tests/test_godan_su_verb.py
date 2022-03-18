@@ -1,44 +1,44 @@
 import pytest
-from mikan import GodanVerb, VerbForm
+from mikan import GodanVerb, Form
 
 @pytest.mark.parametrize(
     "verb,tense,negative,polite,expected",
     [
-        ('かす', VerbForm.PRESENT, False, False, 'かす'),
-        ('かす', VerbForm.PAST, False, False, 'かした'),
-        ('かす', VerbForm.PRESUMPTIVE, False, False, 'かすだろう'),
-        ('かす', VerbForm.CONDITIONAL_RA, False, False, 'かしたら'),
-        ('かす', VerbForm.POTENTIAL, False, False, 'かせる'),
-        ('かす', VerbForm.PASSIVE, False, False, 'かされる'),
-        ('かす', VerbForm.CAUSATIVE, False, False, 'かさせる'),
-        ('かす', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, False, 'かさせられる'),
+        ('かす', Form.PRESENT, False, False, 'かす'),
+        ('かす', Form.PAST, False, False, 'かした'),
+        ('かす', Form.PRESUMPTIVE, False, False, 'かすだろう'),
+        ('かす', Form.CONDITIONAL_RA, False, False, 'かしたら'),
+        ('かす', Form.POTENTIAL, False, False, 'かせる'),
+        ('かす', Form.PASSIVE, False, False, 'かされる'),
+        ('かす', Form.CAUSATIVE, False, False, 'かさせる'),
+        ('かす', (Form.CAUSATIVE, Form.PASSIVE), False, False, 'かさせられる'),
 
-        ('かす', VerbForm.PRESENT, True, False, 'かさない'),
-        ('かす', VerbForm.PAST, True, False, 'かさなかった'),
-        ('かす', VerbForm.PRESUMPTIVE, True, False, 'かさないだろう'),
-        ('かす', VerbForm.CONDITIONAL_RA, True, False, 'かさなかったら'),
-        ('かす', VerbForm.POTENTIAL, True, False, 'かせない'),
-        ('かす', VerbForm.PASSIVE, True, False, 'かされない'),
-        ('かす', VerbForm.CAUSATIVE, True, False, 'かさせない'),
-        ('かす', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, False, 'かさせられない'),
+        ('かす', Form.PRESENT, True, False, 'かさない'),
+        ('かす', Form.PAST, True, False, 'かさなかった'),
+        ('かす', Form.PRESUMPTIVE, True, False, 'かさないだろう'),
+        ('かす', Form.CONDITIONAL_RA, True, False, 'かさなかったら'),
+        ('かす', Form.POTENTIAL, True, False, 'かせない'),
+        ('かす', Form.PASSIVE, True, False, 'かされない'),
+        ('かす', Form.CAUSATIVE, True, False, 'かさせない'),
+        ('かす', (Form.CAUSATIVE, Form.PASSIVE), True, False, 'かさせられない'),
 
-        ('かす', VerbForm.PRESENT, False, True, 'かします'),
-        ('かす', VerbForm.PAST, False, True, 'かしました'),
-        ('かす', VerbForm.PRESUMPTIVE, False, True, 'かすでしょう'),
-        ('かす', VerbForm.CONDITIONAL_RA, False, True, 'かしましたら'),
-        ('かす', VerbForm.POTENTIAL, False, True, 'かせます'),
-        ('かす', VerbForm.PASSIVE, False, True, 'かされます'),
-        ('かす', VerbForm.CAUSATIVE, False, True, 'かさせます'),
-        ('かす', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, True, 'かさせられます'),
+        ('かす', Form.PRESENT, False, True, 'かします'),
+        ('かす', Form.PAST, False, True, 'かしました'),
+        ('かす', Form.PRESUMPTIVE, False, True, 'かすでしょう'),
+        ('かす', Form.CONDITIONAL_RA, False, True, 'かしましたら'),
+        ('かす', Form.POTENTIAL, False, True, 'かせます'),
+        ('かす', Form.PASSIVE, False, True, 'かされます'),
+        ('かす', Form.CAUSATIVE, False, True, 'かさせます'),
+        ('かす', (Form.CAUSATIVE, Form.PASSIVE), False, True, 'かさせられます'),
 
-        ('かす', VerbForm.PRESENT, True, True, 'かしません'),
-        ('かす', VerbForm.PAST, True, True, 'かしませんでした'),
-        ('かす', VerbForm.PRESUMPTIVE, True, True, 'かさないでしょう'),
-        ('かす', VerbForm.CONDITIONAL_RA, True, True, 'かしませんでしたら'),
-        ('かす', VerbForm.POTENTIAL, True, True, 'かせません'),
-        ('かす', VerbForm.PASSIVE, True, True, 'かされません'),
-        ('かす', VerbForm.CAUSATIVE, True, True, 'かさせません'),
-        ('かす', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, True, 'かさせられません'),
+        ('かす', Form.PRESENT, True, True, 'かしません'),
+        ('かす', Form.PAST, True, True, 'かしませんでした'),
+        ('かす', Form.PRESUMPTIVE, True, True, 'かさないでしょう'),
+        ('かす', Form.CONDITIONAL_RA, True, True, 'かしませんでしたら'),
+        ('かす', Form.POTENTIAL, True, True, 'かせません'),
+        ('かす', Form.PASSIVE, True, True, 'かされません'),
+        ('かす', Form.CAUSATIVE, True, True, 'かさせません'),
+        ('かす', (Form.CAUSATIVE, Form.PASSIVE), True, True, 'かさせられません'),
     ]
 )
 def test_godan_su_1(verb, tense, negative, polite, expected):
@@ -50,12 +50,12 @@ def test_godan_su_1(verb, tense, negative, polite, expected):
 @pytest.mark.parametrize(
     "verb,tense,negative,expected",
     [
-        ('かす', VerbForm.IMPERATIVE, False, 'かせ'),
-        ('かす', VerbForm.IMPERATIVE, True, 'かすな'),
-        ('かす', VerbForm.TE_FORM, False, 'かして'),
-        ('かす', VerbForm.TE_FORM, True, 'かさなくて'),
-        ('かす', VerbForm.CONDITIONAL_EBA, False, 'かせば'),
-        ('かす', VerbForm.CONDITIONAL_EBA, True, 'かさなければ'),
+        ('かす', Form.IMPERATIVE, False, 'かせ'),
+        ('かす', Form.IMPERATIVE, True, 'かすな'),
+        ('かす', Form.TE, False, 'かして'),
+        ('かす', Form.TE, True, 'かさなくて'),
+        ('かす', Form.CONDITIONAL_EBA, False, 'かせば'),
+        ('かす', Form.CONDITIONAL_EBA, True, 'かさなければ'),
     ]
 )
 def test_godan_su_2(verb, tense, negative, expected):
@@ -67,8 +67,8 @@ def test_godan_su_2(verb, tense, negative, expected):
 @pytest.mark.parametrize(
     "verb,tense,polite,expected",
     [
-        ('かす', VerbForm.VOLITIONAL, False, 'かそう'),
-        ('かす', VerbForm.VOLITIONAL, True, 'かしましょう'),
+        ('かす', Form.VOLITIONAL, False, 'かそう'),
+        ('かす', Form.VOLITIONAL, True, 'かしましょう'),
     ]
 )
 def test_godan_su_3(verb, tense, polite, expected):

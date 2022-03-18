@@ -1,5 +1,5 @@
 import pytest
-from mikan import IAdjective, IchidanVerb, VerbForm, InvalidConjugation
+from mikan import IAdjective, IchidanVerb, Form, InvalidConjugation
 
 def test_not_ichidan():
 
@@ -9,41 +9,41 @@ def test_not_ichidan():
 @pytest.mark.parametrize(
     "verb,tense,negative,polite,expected",
     [
-        ('たべる', VerbForm.PRESENT, False, False, 'たべる'),
-        ('たべる', VerbForm.PAST, False, False, 'たべた'),
-        ('たべる', VerbForm.PRESUMPTIVE, False, False, 'たべるだろう'),
-        ('たべる', VerbForm.CONDITIONAL_RA, False, False, 'たべたら'),
-        ('たべる', VerbForm.POTENTIAL, False, False, 'たべられる'),
-        ('たべる', VerbForm.PASSIVE, False, False, 'たべられる'),
-        ('たべる', VerbForm.CAUSATIVE, False, False, 'たべさせる'),
-        ('たべる', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, False, 'たべさせられる'),
+        ('たべる', Form.PRESENT, False, False, 'たべる'),
+        ('たべる', Form.PAST, False, False, 'たべた'),
+        ('たべる', Form.PRESUMPTIVE, False, False, 'たべるだろう'),
+        ('たべる', Form.CONDITIONAL_RA, False, False, 'たべたら'),
+        ('たべる', Form.POTENTIAL, False, False, 'たべられる'),
+        ('たべる', Form.PASSIVE, False, False, 'たべられる'),
+        ('たべる', Form.CAUSATIVE, False, False, 'たべさせる'),
+        ('たべる', (Form.CAUSATIVE, Form.PASSIVE), False, False, 'たべさせられる'),
 
-        ('たべる', VerbForm.PRESENT, True, False, 'たべない'),
-        ('たべる', VerbForm.PAST, True, False, 'たべなかった'),
-        ('たべる', VerbForm.PRESUMPTIVE, True, False, 'たべないだろう'),
-        ('たべる', VerbForm.CONDITIONAL_RA, True, False, 'たべなかったら'),
-        ('たべる', VerbForm.POTENTIAL, True, False, 'たべられない'),
-        ('たべる', VerbForm.PASSIVE, True, False, 'たべられない'),
-        ('たべる', VerbForm.CAUSATIVE, True, False, 'たべさせない'),
-        ('たべる', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, False, 'たべさせられない'),
+        ('たべる', Form.PRESENT, True, False, 'たべない'),
+        ('たべる', Form.PAST, True, False, 'たべなかった'),
+        ('たべる', Form.PRESUMPTIVE, True, False, 'たべないだろう'),
+        ('たべる', Form.CONDITIONAL_RA, True, False, 'たべなかったら'),
+        ('たべる', Form.POTENTIAL, True, False, 'たべられない'),
+        ('たべる', Form.PASSIVE, True, False, 'たべられない'),
+        ('たべる', Form.CAUSATIVE, True, False, 'たべさせない'),
+        ('たべる', (Form.CAUSATIVE, Form.PASSIVE), True, False, 'たべさせられない'),
 
-        ('たべる', VerbForm.PRESENT, False, True, 'たべます'),
-        ('たべる', VerbForm.PAST, False, True, 'たべました'),
-        ('たべる', VerbForm.PRESUMPTIVE, False, True, 'たべるでしょう'),
-        ('たべる', VerbForm.CONDITIONAL_RA, False, True, 'たべましたら'),
-        ('たべる', VerbForm.POTENTIAL, False, True, 'たべられます'),
-        ('たべる', VerbForm.PASSIVE, False, True, 'たべられます'),
-        ('たべる', VerbForm.CAUSATIVE, False, True, 'たべさせます'),
-        ('たべる', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), False, True, 'たべさせられます'),
+        ('たべる', Form.PRESENT, False, True, 'たべます'),
+        ('たべる', Form.PAST, False, True, 'たべました'),
+        ('たべる', Form.PRESUMPTIVE, False, True, 'たべるでしょう'),
+        ('たべる', Form.CONDITIONAL_RA, False, True, 'たべましたら'),
+        ('たべる', Form.POTENTIAL, False, True, 'たべられます'),
+        ('たべる', Form.PASSIVE, False, True, 'たべられます'),
+        ('たべる', Form.CAUSATIVE, False, True, 'たべさせます'),
+        ('たべる', (Form.CAUSATIVE, Form.PASSIVE), False, True, 'たべさせられます'),
 
-        ('たべる', VerbForm.PRESENT, True, True, 'たべません'),
-        ('たべる', VerbForm.PAST, True, True, 'たべませんでした'),
-        ('たべる', VerbForm.PRESUMPTIVE, True, True, 'たべないでしょう'),
-        ('たべる', VerbForm.CONDITIONAL_RA, True, True, 'たべませんでしたら'),
-        ('たべる', VerbForm.POTENTIAL, True, True, 'たべられません'),
-        ('たべる', VerbForm.PASSIVE, True, True, 'たべられません'),
-        ('たべる', VerbForm.CAUSATIVE, True, True, 'たべさせません'),
-        ('たべる', (VerbForm.CAUSATIVE, VerbForm.PASSIVE), True, True, 'たべさせられません'),
+        ('たべる', Form.PRESENT, True, True, 'たべません'),
+        ('たべる', Form.PAST, True, True, 'たべませんでした'),
+        ('たべる', Form.PRESUMPTIVE, True, True, 'たべないでしょう'),
+        ('たべる', Form.CONDITIONAL_RA, True, True, 'たべませんでしたら'),
+        ('たべる', Form.POTENTIAL, True, True, 'たべられません'),
+        ('たべる', Form.PASSIVE, True, True, 'たべられません'),
+        ('たべる', Form.CAUSATIVE, True, True, 'たべさせません'),
+        ('たべる', (Form.CAUSATIVE, Form.PASSIVE), True, True, 'たべさせられません'),
     ]
 )
 def test_ichidan_1(verb, tense, negative, polite, expected):
@@ -55,12 +55,12 @@ def test_ichidan_1(verb, tense, negative, polite, expected):
 @pytest.mark.parametrize(
     "verb,tense,negative,expected",
     [
-        ('たべる', VerbForm.IMPERATIVE, False, 'たべろ'),
-        ('たべる', VerbForm.IMPERATIVE, True, 'たべるな'),
-        ('たべる', VerbForm.TE_FORM, False, 'たべて'),
-        ('たべる', VerbForm.TE_FORM, True, 'たべなくて'),
-        ('たべる', VerbForm.CONDITIONAL_EBA, False, 'たべれば'),
-        ('たべる', VerbForm.CONDITIONAL_EBA, True, 'たべなければ'),
+        ('たべる', Form.IMPERATIVE, False, 'たべろ'),
+        ('たべる', Form.IMPERATIVE, True, 'たべるな'),
+        ('たべる', Form.TE, False, 'たべて'),
+        ('たべる', Form.TE, True, 'たべなくて'),
+        ('たべる', Form.CONDITIONAL_EBA, False, 'たべれば'),
+        ('たべる', Form.CONDITIONAL_EBA, True, 'たべなければ'),
     ]
 )
 def test_ichidan_2(verb, tense, negative, expected):
@@ -72,8 +72,8 @@ def test_ichidan_2(verb, tense, negative, expected):
 @pytest.mark.parametrize(
     "verb,tense,polite,expected",
     [
-        ('たべる', VerbForm.VOLITIONAL, False, 'たべよう'),
-        ('たべる', VerbForm.VOLITIONAL, True, 'たべましょう'),
+        ('たべる', Form.VOLITIONAL, False, 'たべよう'),
+        ('たべる', Form.VOLITIONAL, True, 'たべましょう'),
     ]
 )
 def test_ichidan_3(verb, tense, polite, expected):
@@ -85,7 +85,7 @@ def test_ichidan_3(verb, tense, polite, expected):
 def test_ichidan_tai():
 
     v = IchidanVerb('たべる')
-    tai = v.conjugate(VerbForm.TAI)
+    tai = v.conjugate(Form.TAI)
     assert 'たべたい' in tai.readings
     assert isinstance(tai, IAdjective)
 
@@ -113,4 +113,4 @@ def test_ichidan_invalid():
     v = IchidanVerb('食べる', 'たべる')
 
     with pytest.raises(InvalidConjugation):
-        v.conjugate(VerbForm.IMPERATIVE, polite=True)
+        v.conjugate(Form.IMPERATIVE, polite=True)
