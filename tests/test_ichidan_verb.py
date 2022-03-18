@@ -87,7 +87,15 @@ def test_ichidan_tai():
     v = IchidanVerb('たべる')
     tai = v.conjugate(Form.TAI)
     assert 'たべたい' in tai.readings
-    assert isinstance(tai, IAdjective)
+
+    takunai = v.conjugate(Form.TAI, negative=True)
+    assert 'たべたくない' in takunai.readings
+
+    takatta = v.conjugate([Form.TAI, Form.PAST])
+    assert 'たべたかった' in takatta.readings
+
+    takunakatta = v.conjugate([Form.TAI, Form.PAST], negative=True)
+    assert 'たべたくなかった' in takunakatta.readings
 
 def test_ichidan_word():
 

@@ -132,7 +132,7 @@ class Verb:
         if current == Form.CAUSATIVE:
             return IchidanVerb(self._forms[0]['cau'] + 'せる').conjugate(follow, polite, negative)
         if current == Form.TAI:
-            return IAdjective(self._forms[0]['masu'] + 'たい')
+            return IAdjective(self._forms[0]['masu'] + 'たい').conjugate(follow, negative)
 
         if negative not in self._ENDINGS[current]:
             raise InvalidConjugation("There's no negative for this form")
