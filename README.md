@@ -1,5 +1,4 @@
-Mikan
-=====
+# Mikan
 
 Mikan is a Japanese language manipulation library.
 
@@ -8,9 +7,9 @@ import mikan
 
 eat = mikan.IchidanVerb('食べる', 'たべる')
 
-want_to_eat = eat.conjugate(mikan.VerbForm.TAI)
+want_to_eat = eat.conjugate(mikan.Form.TAI)
 
-did_not_want_to_eat = want_to_eat.conjugate(mikan.AdjectiveForm.PAST, negative=True)
+did_not_want_to_eat = eat.conjugate(mikan.Form.TAI, mikan.Form.PAST, negative=True)
 
 three_small_animals = mikan.Number(3) + mikan.Counter('匹', 'ひき')
 
@@ -25,13 +24,11 @@ print(reading) # ねこがさんびきたべたくなかったです
 print(mikan.to_romaji(reading)) # nekogasanbikitabetakunakattadesu
 ```
 
-Motivation
-----------
+## Motivation
 
 I wanted to learn japanese, but it proved to be hard. So I wrote some Python app mixing a dictionary and a SRS system, with generated items (like inflected verbs), to help me. But the code became messy and hard to manage, so I moved the generation code into a Python library. I named it Mikan, because I like how the みかん hiragana looks like (though fruit names tends to be written with katakana...). Now I'm working on this library and my app is kind of stale. And I'm still not speaking japanese.
 
-Words, writings and readings
-----------------------------
+## Words, writings and readings
 
 In Mikan, most class classes inherits from the `Word` class. A word is a list of writings. Each writing can also be a reading.
 
@@ -56,53 +53,43 @@ japan = mikan.Word('日本', 'にほん')
 cooking = mikan.Word('料理', 'りょうり')
 
 japanese_cooking = japan + cooking
-print(japanese_cooking.writings) # ['日本料理', 'にほん料理', '日本りょうり', 'にほんりょうり']
+print(japanese_cooking.writings) # ['日本料理', 'にほんりょうり']
 print(japanese_cooking.readings) # ['にほんりょうり']
 ```
 
-Verbs
------
+## Inflections
 
-Mikan provides 5 verb classes:
-- `GodanVerb` for class 1 verbs
-- `IchidanVerb` for class 2 verbs
-- `KuruVerb` for 来る (to come) and 来る-based compounds (ie: 持ってくる)
-- `SuruVerb` for する and する-verbs (ie: 勉強する)
-- `IkuVerb` for 行く and 行く-based compounds (ie: 持っていく)
+### Forms
+
+- `mikan.Form.PRESENT`
+- `mikan.Form.PAST`
+- `mikan.Form.IMPERATIVE`
+- `mikan.Form.TE`
+- `mikan.Form.CONDITIONAL_EBA`
+- `mikan.Form.CONDITIONAL_RA`
+- `mikan.Form.PRESUMPTIVE`
+- `mikan.Form.VOLITIONAL`
+- `mikan.Form.POTENTIAL`
+- `mikan.Form.PASSIVE`
+- `mikan.Form.CAUSATIVE`
+- `mikan.Form.TAI`
+- `mikan.Form.ADVERB`
+
+### Verbs
 
 Verbs have a `conjugate` method that returns the inflected form of a verb.
 
 `conjugate(forms, negative=False, polite=False)`
 
-The available verb forms are:
+`forms` can be a form or a list of forms.
 
-- `VerbForm.PRESENT`
-- `VerbForm.PAST`
-- `VerbForm.IMPERATIVE`
-- `VerbForm.TE_FORM`
-- `VerbForm.CONDITIONAL_EBA`
-- `VerbForm.CONDITIONAL_RA`
-- `VerbForm.PRESUMPTIVE`
-- `VerbForm.VOLITIONAL`
-- `VerbForm.POTENTIAL`
-- `VerbForm.PASSIVE`
-- `VerbForm.CAUSATIVE`
-- `VerbForm.TAI`
-
-Adjectives
-----------
+### Adjectives
 
 Mikan only has support for i-adjectives yet, available using the `IAdjective` class.
 
-They have the same interface than verbs, with the following forms:
+`conjugate(forms, negative=False)`
 
-- `PRESENT`
-- `PAST`
-- `TE_FORM`
-- `ADVERB`
-
-Numbers
--------
+## Numbers
 
 Numbers are created with the `Number` and can be created from python integers or from kanjis:
 
@@ -115,8 +102,7 @@ a2 = mikan.Number('四十二')
 assert a1 == a2
 ```
 
-Counters
---------
+## Counters
 
 Mikan includes a generic class `Counter` and some specific classes for reading exceptions:
 
@@ -136,8 +122,7 @@ hon = mikan.Counter('本', 'ほん')
 assert 'いっぽん' in (number + hon).readings
 ```
 
-Datetime
---------
+## Datetime
 
 Mikan has a wrapper for Python `datetime.date` class:
 
@@ -150,8 +135,7 @@ mikan_date = mikan.Date(datetime.date(year=2020, month=3, day=16))
 print(mikan_date) # 2020年3月16日
 ```
 
-Romaji
-------
+## Romaji
 
 Some functions are provided to convert between romaji and kana:
 
