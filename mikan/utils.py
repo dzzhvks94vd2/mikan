@@ -176,6 +176,18 @@ def _build_enhancer(
         return symbols
     return _enhance
 
+def _on_error_fail(todecode: str, string: str) -> Tuple[str, List[str]]:
+    raise ConversionError(f"Cannot convert {todecode} in {string}")
+
+def _on_error_ignore(todecode: str, _: str) -> Tuple[str, List[str]]:
+    sub = todecode[0]
+    return sub, [sub, sub, sub]
+
+_ERRORS = {
+    "fail": _on_error_fail,
+    "ignore": _on_error_ignore,
+}
+
 class Converter:
 
     def __init__(self) -> None:
@@ -212,7 +224,10 @@ class Converter:
                 return sub, self._symbols[sub]
         return None, None
 
-    def _convert(self, string: str, index: int) -> str:
+    def _convert(self, string: str, index: int, errors: Optional[str]=None) -> str:
+
+        if errors is None:
+            errors = "fail"
 
         todecode = string
 
@@ -220,32 +235,32 @@ class Converter:
         while todecode:
             sub, symbol = self.next_symbol(todecode)
             if (sub is None) or (symbol is None):
-                raise ConversionError(f"Cannot convert {todecode} in {string}")
+                sub, symbol = _ERRORS[errors](todecode, string)
             symbols.append(symbol[index])
             todecode = todecode[len(sub):]
 
         return ''.join(symbols)
 
-    def to_romaji(self, string: str) -> str:
+    def to_romaji(self, string: str, errors: Optional[str]=None) -> str:
 
-        return self._convert(string, 0)
+        return self._convert(string, 0, errors)
 
-    def to_hiragana(self, string: str) -> str:
+    def to_hiragana(self, string: str, errors: Optional[str]=None) -> str:
 
-        return self._convert(string, 1)
+        return self._convert(string, 1, errors)
 
-    def to_katakana(self, string: str) -> str:
+    def to_katakana(self, string: str, errors: Optional[str]=None) -> str:
 
-        return self._convert(string, 2)
+        return self._convert(string, 2, errors)
 
-def to_katakana(string: str) -> str:
+def to_katakana(string: str, errors: Optional[str]=None) -> str:
     converter = Converter()
-    return converter.to_katakana(string)
+    return converter.to_katakana(string, errors)
 
-def to_hiragana(string: str) -> str:
+def to_hiragana(string: str, errors: Optional[str]=None) -> str:
     converter = Converter()
-    return converter.to_hiragana(string)
+    return converter.to_hiragana(string, errors)
 
-def to_romaji(string: str) -> str:
+def to_romaji(string: str, errors: Optional[str]=None) -> str:
     converter = Converter()
-    return converter.to_romaji(string)
+    return converter.to_romaji(string, errors)
