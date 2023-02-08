@@ -52,12 +52,13 @@ class YoiAdjective(IAdjective):
 
     def __init__(self, *args: Union[str, Writing, BaseWord]) -> None:
 
-        super().__init__(*args)
+        word = Word(*args)
+        base, ending = word.split_okurigana(2)
 
-        base, ending = self.split_okurigana(2)
-
-        if not ending in ('良い', 'よい'):
+        if not ending in ('良い', 'よい', 'いい'):
             raise ValueError('This is not a yoi adjective')
+
+        super().__init__(base + Word('良い', 'よい'))
 
         self._ii = base + Word('良い', 'いい')
 

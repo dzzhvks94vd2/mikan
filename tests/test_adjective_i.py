@@ -36,6 +36,8 @@ def test_i_adjective_2(adj, tense, expected):
 
         ('よい', Form.PRESENT, True, 'よくない'),
         ('よい', Form.PAST, True, 'よくなかった'),
+
+        ('いい', Form.PRESENT, True, 'よくない'),
     ]
 )
 def test_yoi_adjective_1(adj, tense, negative, expected):
@@ -46,7 +48,9 @@ def test_yoi_adjective_1(adj, tense, negative, expected):
 @pytest.mark.parametrize(
     "adj,expected",
     [
+        ('いい', 'いい'),
         ('よい', 'いい'),
+        ('あたまがいい', 'あたまがいい'),
         ('あたまがよい', 'あたまがいい'),
     ]
 )
